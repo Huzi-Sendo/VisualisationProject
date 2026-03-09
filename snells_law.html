@@ -648,12 +648,12 @@ function drawAngleArcs(cx, bY, t1, t2, isTIR, tc) {
   ctx.arc(cx, bY, R, -HALF_PI, -HALF_PI + t1, false);
   ctx.stroke();
 
-  // θ₂ arc — refracted (lower right)
+  // θ₂ arc — refracted (lower, right of normal)
   if (!isTIR && t2 !== null) {
     var t2h = t2 * 0.5;
     ctx.strokeStyle = '#00b4ff';
     ctx.beginPath();
-    ctx.arc(cx, bY, R, HALF_PI, HALF_PI + t2, false);
+    ctx.arc(cx, bY, R, HALF_PI, HALF_PI - t2, true);
     ctx.stroke();
     ctx.fillStyle = '#00b4ff';
     ctx.fillText('\u03b8\u2082=' + (t2 * RAD_TO_DEG).toFixed(1) + '\u00b0',
