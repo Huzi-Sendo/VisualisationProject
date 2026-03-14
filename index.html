@@ -1302,7 +1302,76 @@ footer {
     </div>
   </div>
 </div>
-<!-- ── LIVE SIM 03 - N-BODY ──────────────────────────── -->
+<div class="divider"></div>
+
+<!-- LIVE SIM 03 - LORENTZ BOOST -->
+<div>
+  <div class="sec-head">
+    <div>
+      <p class="sec-super">Live &middot; Visualisation 03 of 15</p>
+      <h2 class="sec-h2">Lorentz Boost Visualiser</h2>
+    </div>
+    <span class="sec-aside">Special Relativity</span>
+  </div>
+  <div class="live-wrap">
+    <div class="live-card">
+      <div class="live-card-top">
+        <div class="live-meta">
+          <div class="live-eyebrow">
+            <span class="tag tag-live">&#x25cf; Live</span>
+            <span class="tag tag-topic">Special Relativity</span>
+            <span class="tag tag-diff">Intermediate</span>
+          </div>
+          <h3 class="live-title">Lorentz Boost Visualiser</h3>
+          <p class="live-desc">Drag the &beta; slider and watch the S&prime; frame axes tilt symmetrically around the 45&deg; light cone line in real time. Simultaneity shifts, length contracts, and time dilates, all emerging from the pure geometry of the Minkowski diagram. Invariant hyperbolae confirm that ds&sup2; is frame-independent. Includes a 3D perspective view and a 2D ct-x corner diagram always visible in the corner.</p>
+        </div>
+        <div class="live-actions">
+          <a href="lorentz_boost.html" target="_blank" class="btn-ghost">Open Simulation &#x2197;</a>
+        </div>
+      </div>
+      <div class="instr-panel">
+        <div class="instr-head" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.instr-toggle').textContent = this.nextElementSibling.classList.contains('open') ? '&#x25b2; Hide' : '&#x25bc; How to use';">
+          <span class="instr-label">How to use</span>
+          <button class="instr-toggle">&#x25bc; How to use</button>
+        </div>
+        <div class="instr-body">
+          <div class="instr-steps">
+            <div class="instr-step"><span class="instr-n">1</span><p class="instr-text"><b>Open the simulation</b> using the button above.</p></div>
+            <div class="instr-step"><span class="instr-n">2</span><p class="instr-text"><b>Drag the &beta; slider</b> to boost the S&prime; frame. The orange ct&prime; and x&prime; axes tilt symmetrically toward the 45&deg; light cone line.</p></div>
+            <div class="instr-step"><span class="instr-n">3</span><p class="instr-text"><b>Enable simultaneity planes</b> to see lines of constant t become diagonal in S&prime;, the visual signature of the relativity of simultaneity.</p></div>
+            <div class="instr-step"><span class="instr-n">4</span><p class="instr-text"><b>Toggle invariant hyperbola</b> to confirm ds&sup2; is preserved across all boosts. The curves connect all events at equal proper distance from the origin.</p></div>
+            <div class="instr-step"><span class="instr-n">5</span><p class="instr-text"><b>Use the speed slider</b> to auto-sweep through velocities and watch the axes tilt continuously from rest to near-light-speed.</p></div>
+          </div>
+          <div class="instr-keys">
+            <span class="key">Drag</span><span class="key-sep">orbit 3D view</span>
+            <span class="key">Scroll</span><span class="key-sep">zoom</span>
+            <span class="key">&beta; slider</span><span class="key-sep">boost velocity</span>
+            <span class="key">Speed slider</span><span class="key-sep">auto-animate boost</span>
+          </div>
+        </div>
+      </div>
+      <a href="lorentz_boost.html" target="_blank" class="sim-preview" aria-label="Open Lorentz Boost Visualiser">
+        <canvas class="preview-canvas" id="lorentzBoostPrev"></canvas>
+        <div class="preview-overlay"><div class="preview-cta"><span class="preview-icon"><svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" stroke="white" stroke-width="1.2" opacity="0.6"/><polygon points="9,7 16,11 9,15" fill="white"/></svg></span><span class="preview-label">Open Interactive Simulation</span><span class="preview-sub">Opens in a new tab</span></div></div>
+      </a>
+      <div class="live-card-foot">
+        <span class="chip">3D dual-frame axes</span>
+        <span class="chip">S &amp; S&prime; frames</span>
+        <span class="chip">Simultaneity planes</span>
+        <span class="chip">Invariant hyperbola</span>
+        <span class="chip">Light cone</span>
+        <span class="chip">&beta; slider</span>
+        <span class="chip">Auto-animation</span>
+        <span class="chip">2D corner diagram</span>
+        <span class="chip">7 presets</span>
+        <span class="chip">60 fps</span>
+        <span class="chip">Zero dependencies</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LIVE SIM 04 - N-BODY ──────────────────────────── -->
 <div>
   <div class="sec-head">
     <div>
@@ -1526,7 +1595,7 @@ footer {
 <div id="coming-soon">
   <div class="sec-head">
     <div>
-      <p class="sec-super">Planned · 10 visualisations in development</p>
+      <p class="sec-super">Planned · 9 visualisations in development</p>
       <h2 class="sec-h2">What's Next</h2>
     </div>
     <span class="sec-aside">2025 - 2026</span>
@@ -1539,7 +1608,7 @@ footer {
       <div class="topic-label">
         <span class="topic-dot" style="background:#BE3A2A;"></span>
         <span class="topic-name">Special Relativity</span>
-        <span class="topic-n">2 visualisations</span>
+        <span class="topic-n">1 visualisation</span>
       </div>
       <div class="card-row">
 
@@ -1554,16 +1623,7 @@ footer {
           </div>
         </div>
 
-        <div class="c-card t-rel">
-          <div class="c-top"><span class="c-num">03</span><span class="c-soon">Soon</span></div>
-          <div class="c-title">Lorentz Boost Visualiser</div>
-          <p class="c-desc">Drag the &beta; slider and watch Minkowski axes tilt in real time. Simultaneity shifts, length contracts, and time dilates, all emerging from the geometry of the diagram.</p>
-          <div class="c-chips">
-            <span class="c-chip">&beta; = v/c slider</span>
-            <span class="c-chip">Dual-frame axes</span>
-            <span class="c-chip">Invariant hyperbola</span>
-          </div>
-        </div>
+        
 
       </div>
     </div>
@@ -1686,7 +1746,7 @@ footer {
       <div class="topic-label">
         <span class="topic-dot" style="background:#803AAA;"></span>
         <span class="topic-name">Electromagnetism</span>
-        <span class="topic-n">2 visualisations</span>
+        <span class="topic-n">1 visualisation</span>
       </div>
       <div class="card-row">
 
@@ -2223,6 +2283,125 @@ footer {
     ctx.fillText('REST', rCx - 10, topY - 8);
     ctx.fillStyle = 'rgba(255,149,0,0.35)';
     ctx.fillText('MOVING', mCx - 14, topY - 8 - 14);
+
+    requestAnimationFrame(draw);
+  }
+
+  var ro = new ResizeObserver(function() { resize(); });
+  ro.observe(cv.parentElement);
+  resize();
+  draw();
+}());
+</script>
+
+<script>
+/* -- Lorentz Boost preview canvas -- */
+(function() {
+  var cv = document.getElementById('lorentzBoostPrev');
+  if (!cv) return;
+  var ctx = cv.getContext('2d');
+  var t = 0;
+  var betaAnim = 0.0;
+  var betaDir  = 1;
+
+  function resize() { cv.width = cv.offsetWidth; cv.height = cv.offsetHeight; }
+
+  function draw() {
+    t += 0.012;
+    var W = cv.width, H = cv.height;
+    if (!W || !H) { requestAnimationFrame(draw); return; }
+
+    // Slowly oscillate beta
+    betaAnim += betaDir * 0.004;
+    if (betaAnim >  0.94) betaDir = -1;
+    if (betaAnim < -0.94) betaDir =  1;
+    var beta  = betaAnim;
+    var gamma = beta*beta >= 1 ? 9999 : 1/Math.sqrt(1-beta*beta);
+
+    ctx.fillStyle = '#020408';
+    ctx.fillRect(0, 0, W, H);
+
+    // Grid
+    ctx.strokeStyle = '#060f1c'; ctx.lineWidth = 0.5;
+    for (var x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (var y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+
+    var ox = W * 0.48, oy = H * 0.55;
+    var sc = Math.min(W, H) * 0.072;
+
+    function s2p(ct, x) { return { px: ox + x*sc, py: oy - ct*sc }; }
+
+    // Light cone lines
+    var ext = 8;
+    ctx.strokeStyle = '#00b4ff'; ctx.lineWidth = 0.8; ctx.globalAlpha = 0.3;
+    ctx.setLineDash([4,3]);
+    var lc1a = s2p(-ext,-ext), lc1b = s2p(ext,ext);
+    ctx.beginPath(); ctx.moveTo(lc1a.px,lc1a.py); ctx.lineTo(lc1b.px,lc1b.py); ctx.stroke();
+    ctx.strokeStyle = '#ff3c64';
+    var lc2a = s2p(-ext,ext), lc2b = s2p(ext,-ext);
+    ctx.beginPath(); ctx.moveTo(lc2a.px,lc2a.py); ctx.lineTo(lc2b.px,lc2b.py); ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Simultaneity planes (t'=const lines)
+    if (Math.abs(beta) > 0.01) {
+      ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 0.7; ctx.globalAlpha = 0.18;
+      ctx.setLineDash([4,3]);
+      for (var n = -6; n <= 6; n++) {
+        if (!n) continue;
+        var ct1 = beta*(-ext) + n/gamma, ct2 = beta*ext + n/gamma;
+        var p1 = s2p(ct1,-ext), p2 = s2p(ct2,ext);
+        ctx.beginPath(); ctx.moveTo(p1.px,p1.py); ctx.lineTo(p2.px,p2.py); ctx.stroke();
+      }
+      ctx.setLineDash([]);
+    }
+
+    // Invariant hyperbola arcs
+    ctx.strokeStyle = '#ff9500'; ctx.lineWidth = 0.8; ctx.globalAlpha = 0.25;
+    ctx.setLineDash([3,4]);
+    for (var tau = 1; tau <= 4; tau++) {
+      ctx.beginPath(); var started = false;
+      for (var i = 0; i <= 60; i++) {
+        var xv = -ext + i*(2*ext/60);
+        var ctv = Math.sqrt(tau*tau + xv*xv);
+        var p = s2p(ctv, xv);
+        if (p.px < 0 || p.px > W || p.py < 0 || p.py > H) { started=false; continue; }
+        if (!started) { ctx.moveTo(p.px,p.py); started=true; } else ctx.lineTo(p.px,p.py);
+      }
+      ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    // S frame axes (white)
+    ctx.globalAlpha = 0.7; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5;
+    var sa1 = s2p(-ext, 0), sa2 = s2p(ext, 0);
+    ctx.beginPath(); ctx.moveTo(sa1.px,sa1.py); ctx.lineTo(sa2.px,sa2.py); ctx.stroke();
+    var sx1 = s2p(0, -ext), sx2 = s2p(0, ext);
+    ctx.beginPath(); ctx.moveTo(sx1.px,sx1.py); ctx.lineTo(sx2.px,sx2.py); ctx.stroke();
+
+    // S' frame axes (orange) — tilt by beta
+    if (Math.abs(beta) > 0.005) {
+      ctx.globalAlpha = 0.85; ctx.strokeStyle = '#ff9500'; ctx.lineWidth = 2;
+      var cp1 = s2p(-ext, -ext*beta), cp2 = s2p(ext, ext*beta);
+      ctx.beginPath(); ctx.moveTo(cp1.px,cp1.py); ctx.lineTo(cp2.px,cp2.py); ctx.stroke();
+      var xp1 = s2p(-ext*beta, -ext), xp2 = s2p(ext*beta, ext);
+      ctx.beginPath(); ctx.moveTo(xp1.px,xp1.py); ctx.lineTo(xp2.px,xp2.py); ctx.stroke();
+    }
+
+    // Labels
+    ctx.globalAlpha = 0.7; ctx.fillStyle = '#ffffff'; ctx.font = '9px Orbitron, monospace';
+    var ctlp = s2p(ext+0.4, 0.2); ctx.fillText('ct', ctlp.px, ctlp.py);
+    var xlp  = s2p(0.4, ext+0.3); ctx.fillText('x',  xlp.px,  xlp.py);
+    if (Math.abs(beta) > 0.01) {
+      ctx.fillStyle = '#ff9500';
+      var ctplp = s2p(ext+0.2, ext*beta+0.2); ctx.fillText("ct'", ctplp.px, ctplp.py);
+    }
+
+    // Beta readout
+    ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(255,149,0,0.65)';
+    ctx.font = '8px Orbitron, monospace';
+    ctx.fillText('\u03b2 = ' + beta.toFixed(3), 10, H - 22);
+    ctx.fillStyle = 'rgba(122,184,212,0.45)';
+    ctx.fillText('\u03b3 = ' + gamma.toFixed(3), 10, H - 10);
 
     requestAnimationFrame(draw);
   }

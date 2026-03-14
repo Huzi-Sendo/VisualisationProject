@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lorentz Boost Visualiser · Physviz</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#020408;overflow:hidden;font-family:'Share Tech Mono',monospace;color:#7ab8d4;height:100vh;display:flex;flex-direction:column}
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;background:rgba(0,3,10,0.95);border-bottom:1px solid #0d2840;flex-shrink:0;gap:12px;flex-wrap:wrap}
+#topbar-left{display:flex;flex-direction:column;gap:2px}
+h1{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:#00b4ff}
+.sub{font-size:7px;letter-spacing:2px;opacity:.45;margin-top:1px}
+.stats{display:flex;gap:10px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;align-items:flex-end}
+.slbl{font-size:7px;letter-spacing:1px;opacity:.38}
+.sval{font-size:10px;color:#00ffcc;font-family:'Orbitron',sans-serif}
+#stat-gamma{background:rgba(255,149,0,0.07);border:1px solid rgba(255,149,0,0.22);border-radius:4px;padding:4px 12px}
+#stat-gamma .slbl{color:#ff9500;opacity:.65;letter-spacing:2px}
+#stat-gamma .sval{font-size:20px;color:#ff9500;text-shadow:0 0 16px rgba(255,149,0,.75)}
+#main{flex:1;display:flex;min-height:0}
+#sidebar{width:210px;background:rgba(0,3,12,0.95);border-right:1px solid #0d2840;display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0}
+#sidebar::-webkit-scrollbar{width:3px}
+#sidebar::-webkit-scrollbar-thumb{background:#0d2840}
+.pnl{border-bottom:1px solid #0d2840;padding:10px 12px}
+.pt{font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:2px;color:#00b4ff;margin-bottom:7px;opacity:.75}
+.sr{margin-bottom:8px}
+.rl{display:flex;justify-content:space-between;font-size:8px;margin-bottom:2px}
+.rl span:last-child{color:#00b4ff}
+input[type=range]{width:100%;height:2px;-webkit-appearance:none;background:#0d2840;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:#00b4ff;cursor:pointer}
+.crow{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid #081825;font-size:9px}
+.crow span:last-child{color:#00ffcc}
+.tog-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:8px;margin-bottom:4px}
+.tog{position:relative;width:28px;height:14px;cursor:pointer;flex-shrink:0}
+.tog input{opacity:0;width:0;height:0;position:absolute}
+.tog-track{position:absolute;inset:0;background:#0d2840;border-radius:7px;transition:.2s;border:1px solid #1a4a7a}
+.tog input:checked+.tog-track{background:rgba(0,180,255,.25);border-color:#00b4ff}
+.tog-thumb{position:absolute;top:2px;left:2px;width:9px;height:9px;border-radius:50%;background:#4a7a9a;transition:.2s}
+.tog input:checked~.tog-thumb{left:15px;background:#00b4ff}
+.preset-btn{width:100%;padding:5px 8px;margin-bottom:3px;background:rgba(0,15,35,.6);border:1px solid #0d2840;color:#7ab8d4;font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:1px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:all .15s}
+.preset-btn:hover{border-color:#00b4ff;background:rgba(0,40,90,.5);color:#cce8ff}
+.preset-btn.active{border-color:#00ffcc;color:#00ffcc;background:rgba(0,255,204,.05)}
+.ptag{font-size:7px;padding:1px 5px;border-radius:2px;font-family:'Orbitron',sans-serif;letter-spacing:1px;border:1px solid}
+.leg{display:flex;flex-direction:column;gap:5px}
+.li{display:flex;align-items:center;gap:6px;font-size:8px;line-height:1.4}
+.lc{width:22px;height:2px;flex-shrink:0}
+#canvasArea{flex:1;position:relative;overflow:hidden;min-width:0}
+#cv{display:block;position:absolute;top:0;left:0;cursor:crosshair}
+/* Event tooltip */
+#evtip{position:absolute;pointer-events:none;background:rgba(2,6,20,.92);border:1px solid #0d2840;border-radius:4px;padding:6px 10px;font-size:8px;line-height:1.8;display:none;white-space:nowrap}
+#evtip .ev-s {color:#ffffff}
+#evtip .ev-sp{color:#ff9500}
+/* Theory drawer */
+#theoryDrawer{position:absolute;bottom:0;left:0;right:0;background:rgba(2,6,20,.97);border-top:1px solid #0d2840;transition:transform .3s cubic-bezier(.4,0,.2,1);transform:translateY(100%);max-height:60vh;display:flex;flex-direction:column;pointer-events:none}
+#theoryDrawer.open{transform:translateY(0);pointer-events:all}
+#theoryTab{position:absolute;top:-26px;left:50%;transform:translateX(-50%);background:rgba(2,6,20,.97);border:1px solid #0d2840;border-bottom:none;padding:4px 18px;cursor:pointer;pointer-events:all;font-family:'Orbitron',sans-serif;font-size:7px;letter-spacing:2px;color:#7ab8d4;border-radius:4px 4px 0 0;transition:color .15s;display:flex;align-items:center;gap:6px}
+#theoryTab:hover{color:#cce8ff}
+.tarrow{transition:transform .3s;display:inline-block}
+#theoryDrawer.open .tarrow{transform:rotate(180deg)}
+#theory-body{overflow-y:auto;padding:20px 28px 24px;flex:1;font-size:13px;line-height:1.8;color:#8aacbe}
+#theory-body::-webkit-scrollbar{width:3px}
+#theory-body::-webkit-scrollbar-thumb{background:#0d2840}
+#theory-body h3{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:#00b4ff;margin:18px 0 8px;text-transform:uppercase}
+#theory-body h3:first-child{margin-top:0}
+#theory-body p{margin-bottom:12px}
+#theory-body ul{padding-left:1.4em;margin-bottom:12px}
+#theory-body li{margin-bottom:6px}
+#theory-body a{color:#00b4ff;text-decoration:none;opacity:.8}
+#theory-body a:hover{opacity:1}
+.eq{background:rgba(0,20,50,.6);border:1px solid #0d2840;border-radius:3px;padding:10px 16px;margin:10px 0 16px;font-family:'Share Tech Mono',monospace;font-size:12px;color:#c8dff0;line-height:2;overflow-x:auto;white-space:nowrap}
+.eq sub,.eq sup{font-size:9px}
+.eq-grid{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:10px 0 16px;font-size:12px}
+.eq-lhs{font-family:'Share Tech Mono',monospace;color:#c8dff0;white-space:nowrap}
+.eq-rhs{color:#6a8ea0;font-size:11.5px;line-height:1.5;padding-top:1px}
+#bottombar{display:flex;align-items:center;gap:14px;padding:4px 12px;background:rgba(0,3,10,.9);border-top:1px solid #0d2840;font-size:7px;flex-shrink:0}
+#bottombar span{opacity:.45}
+#bottombar span b{opacity:1;color:#7ab8d4}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="topbar-left">
+    <h1>LORENTZ BOOST VISUALISER</h1>
+    <div class="sub">2D · DUAL-FRAME AXES · SIMULTANEITY PLANES · INVARIANT HYPERBOLA · CLICK TO PLACE EVENTS</div>
+  </div>
+  <div class="stats">
+    <div class="stat" id="stat-gamma"><span class="slbl">Lorentz factor &gamma;</span><span class="sval" id="sv-gamma">1.0000</span></div>
+    <div class="stat"><span class="slbl">&beta; = v/c</span><span class="sval" style="color:#00b4ff" id="sv-beta">0.000</span></div>
+    <div class="stat"><span class="slbl">axis tilt &theta;</span><span class="sval" id="sv-theta">0.0&deg;</span></div>
+    <div class="stat"><span class="slbl">time dilation</span><span class="sval" id="sv-dilation">1.000</span></div>
+    <div class="stat"><span class="slbl">length contraction</span><span class="sval" id="sv-contract">1.000</span></div>
+  </div>
+</div>
+
+<div id="main">
+  <div id="sidebar">
+    <div class="pnl">
+      <div class="pt">Boost</div>
+      <div class="sr">
+        <div class="rl"><span>&beta; = v/c</span><span id="lbl-beta">0.000</span></div>
+        <input type="range" id="sl-beta" min="-995" max="995" value="0" oninput="onBeta(this.value)">
+      </div>
+      <div class="sr">
+        <div class="rl"><span>animation speed</span><span id="lbl-speed">0.0x</span></div>
+        <input type="range" id="sl-speed" min="0" max="40" value="0" oninput="onSpeed(this.value)">
+      </div>
+    </div>
+
+    <div class="pnl">
+      <div class="pt">Display</div>
+      <div class="tog-row"><span>S frame axes (white)</span>
+        <label class="tog"><input type="checkbox" id="tog-s" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+      <div class="tog-row"><span>S&prime; frame axes (orange)</span>
+        <label class="tog"><input type="checkbox" id="tog-sp" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+      <div class="tog-row"><span>simultaneity planes</span>
+        <label class="tog"><input type="checkbox" id="tog-sim" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+      <div class="tog-row"><span>invariant hyperbola</span>
+        <label class="tog"><input type="checkbox" id="tog-hyp" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+      <div class="tog-row"><span>background grid</span>
+        <label class="tog"><input type="checkbox" id="tog-grid" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+      <div class="tog-row"><span>light cone</span>
+        <label class="tog"><input type="checkbox" id="tog-cone" checked><div class="tog-track"></div><div class="tog-thumb"></div></label>
+      </div>
+    </div>
+
+    <div class="pnl">
+      <div class="pt">Events</div>
+      <div style="font-size:7px;color:#7ab8d4;opacity:.6;margin-bottom:6px;line-height:1.6">Click the diagram to place an event. Its coordinates in both frames are shown.</div>
+      <button class="preset-btn" onclick="clearEvents()" style="justify-content:center;font-size:7px">&#x2715; clear all events</button>
+      <div id="event-list" style="margin-top:6px;font-size:8px;line-height:2"></div>
+    </div>
+
+    <div class="pnl">
+      <div class="pt">Readout</div>
+      <div class="crow"><span>&beta;</span><span id="rd-beta">0.000</span></div>
+      <div class="crow"><span>&gamma;</span><span id="rd-gamma">1.0000</span></div>
+      <div class="crow"><span>axis tilt &theta;</span><span id="rd-theta">0.0&deg;</span></div>
+      <div class="crow"><span>&Delta;t&prime; / &Delta;t</span><span id="rd-dil">1.000</span></div>
+      <div class="crow"><span>L&prime; / L</span><span id="rd-con">1.000</span></div>
+    </div>
+
+    <div class="pnl">
+      <div class="pt">Presets</div>
+      <button class="preset-btn active" id="pr-0" onclick="loadPreset(0)"><span>at rest</span><span class="ptag" style="color:#00ffcc;border-color:#00ffcc">&beta;=0</span></button>
+      <button class="preset-btn" id="pr-1" onclick="loadPreset(1)"><span>slow motion</span><span class="ptag" style="color:#00b4ff;border-color:#00b4ff">&beta;=0.3</span></button>
+      <button class="preset-btn" id="pr-2" onclick="loadPreset(2)"><span>half light speed</span><span class="ptag" style="color:#00b4ff;border-color:#00b4ff">&beta;=0.5</span></button>
+      <button class="preset-btn" id="pr-3" onclick="loadPreset(3)"><span>relativistic</span><span class="ptag" style="color:#ff9500;border-color:#ff9500">&beta;=0.8</span></button>
+      <button class="preset-btn" id="pr-4" onclick="loadPreset(4)"><span>ultra-relativistic</span><span class="ptag" style="color:#ff9500;border-color:#ff9500">&beta;=0.95</span></button>
+      <button class="preset-btn" id="pr-5" onclick="loadPreset(5)"><span>near light speed</span><span class="ptag" style="color:#ff3c64;border-color:#ff3c64">&beta;=0.99</span></button>
+      <button class="preset-btn" id="pr-6" onclick="loadPreset(6)"><span>receding &beta;=-0.6</span><span class="ptag" style="color:#7ab8d4;border-color:#7ab8d4">&beta;=-0.6</span></button>
+    </div>
+
+    <div class="pnl">
+      <div class="pt">Legend</div>
+      <div class="leg">
+        <div class="li"><div class="lc" style="background:#ffffff"></div>S frame: ct, x</div>
+        <div class="li"><div class="lc" style="background:#ff9500"></div>S&prime; frame: ct&prime;, x&prime;</div>
+        <div class="li"><div class="lc" style="background:#00ffcc;height:1px;border-top:1px dashed #00ffcc"></div>Simultaneity planes</div>
+        <div class="li"><div class="lc" style="background:#ff9500;height:1px;border-top:1px dashed #ff9500;opacity:.5"></div>Invariant hyperbola</div>
+        <div class="li"><div class="lc" style="background:#00b4ff;opacity:.55"></div>Future light cone</div>
+        <div class="li"><div class="lc" style="background:#ff3c64;opacity:.55"></div>Past light cone</div>
+        <div class="li"><div class="lc" style="background:#c084fc;border-radius:50%;height:6px;width:6px;margin-left:8px"></div>Placed event (drag to move)</div>
+        <div class="li"><div class="lc" style="background:#ff9500;border-radius:50%;height:7px;width:7px;margin-left:7px"></div>S&prime; origin (moving observer)</div>
+        <div class="li"><div class="lc" style="background:#00b4ff;border-radius:50%;height:6px;width:6px;margin-left:8px"></div>Photon pulses at c</div>
+        <div class="li"><div class="lc" style="background:#00ffcc;height:6px;opacity:.4"></div>Advancing &ldquo;now&rdquo; ripple</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="canvasArea">
+    <canvas id="cv"></canvas>
+    <div id="evtip"></div>
+
+    <div id="theoryDrawer">
+      <div id="theoryTab" onclick="toggleTheory()">
+        <span class="tarrow">&#9650;</span>&nbsp;theory
+      </div>
+      <div id="theory-body">
+        <h3>Why Galilean Relativity Fails</h3>
+        <p>In classical mechanics, two frames S and S&prime; moving at relative velocity v are related by x&prime; = x &minus; vt and t&prime; = t. The second equation encodes universal time. But if light travels at c in S, the Galilean rule gives c &minus; v in S&prime;, contradicting Einstein&rsquo;s second postulate. The equation t&prime; = t must be replaced.</p>
+
+        <h3>The Lorentz Transformation</h3>
+        <p>The unique linear transformation preserving the speed of light between inertial frames is:</p>
+        <div class="eq">x&prime; = &gamma;(x &minus; vt) &nbsp;&nbsp;&nbsp;&nbsp; t&prime; = &gamma;(t &minus; vx/c&sup2;)</div>
+        <div class="eq-grid">
+          <span class="eq-lhs">&gamma;</span><span class="eq-rhs">1 / &radic;(1 &minus; &beta;&sup2;) &mdash; Lorentz factor. Always &ge; 1.</span>
+          <span class="eq-lhs">&beta;</span><span class="eq-rhs">v/c &mdash; velocity as a fraction of the speed of light.</span>
+          <span class="eq-lhs">y&prime; = y, z&prime; = z</span><span class="eq-rhs">Transverse dimensions unchanged.</span>
+        </div>
+        <p>The key difference from Galilean is the &minus;vx/c&sup2; term: time in S&prime; depends on both time and <em>position</em> in S. This is the mathematical origin of the relativity of simultaneity.</p>
+
+        <h3>Axis Tilting</h3>
+        <p>A Lorentz boost tilts both the ct&prime; and x&prime; axes toward the 45&deg; light cone line by equal angles &theta; = arctan(&beta;). Both axes close in symmetrically. As &beta; &rarr; 1 they collapse onto the light line &mdash; the geometric reason nothing with mass can reach c.</p>
+        <div class="eq">ct&prime; axis: &nbsp; x = &beta; &middot; ct &nbsp;&nbsp;&nbsp; (worldline of S&prime; origin in S)</div>
+        <div class="eq">x&prime; axis: &nbsp;&nbsp; ct = &beta; &middot; x &nbsp;&nbsp;&nbsp; (surface t&prime; = 0 in S)</div>
+
+        <h3>Three Consequences</h3>
+        <div class="eq-grid">
+          <span class="eq-lhs">Time dilation</span><span class="eq-rhs">&Delta;t = &gamma;&Delta;t&prime;. Moving clock runs slow. ct&prime; tick marks are spaced &gamma; apart in S coordinates.</span>
+          <span class="eq-lhs">Length contraction</span><span class="eq-rhs">L = L&prime;/&gamma;. Moving rods are shorter. Follows from simultaneous endpoint measurement in S.</span>
+          <span class="eq-lhs">Simultaneity</span><span class="eq-rhs">&Delta;t&prime; = &minus;&gamma;&beta;&Delta;x/c for events with &Delta;t = 0. Simultaneous in S means time-separated in S&prime; when &Delta;x &ne; 0.</span>
+        </div>
+
+        <h3>The Invariant Hyperbola</h3>
+        <p>The Minkowski interval ds&sup2; = (c&Delta;t)&sup2; &minus; &Delta;x&sup2; is the same for all observers. Events at constant ds&sup2; = &tau;&sup2; from the origin trace a hyperbola: (ct)&sup2; &minus; x&sup2; = &tau;&sup2;. A boost slides events <em>along</em> the curve without leaving it &mdash; just as a rotation slides points along a circle. The ct&prime; tick marks always sit on these hyperbolas, confirming proper time &tau; is frame-independent.</p>
+        <div class="eq">ds&sup2; = (c&Delta;t)&sup2; &minus; &Delta;x&sup2; &nbsp; (invariant under all boosts)</div>
+
+        <h3>Placed Events</h3>
+        <p>Click anywhere on the diagram to place an event. Its S coordinates (ct, x) are read directly from the diagram. Its S&prime; coordinates (ct&prime;, x&prime;) are computed by the Lorentz transformation in real time. Drag &beta; and watch the S&prime; coordinates change while the S coordinates stay fixed &mdash; this directly demonstrates that the same event has different coordinates in different frames.</p>
+
+        <h3>Velocity Addition</h3>
+        <div class="eq">u = (u&prime; + v) / (1 + u&prime;v/c&sup2;)</div>
+        <p>No combination of sub-light velocities can reach c. If u&prime; = c, then u = c regardless of v: light is always c.</p>
+
+        <h3>What to look for</h3>
+        <ul>
+          <li><b>Axis symmetry:</b> ct&prime; and x&prime; tilt by exactly equal angles, reflecting the hyperbolic &ldquo;rotation&rdquo; that preserves the light cone.</li>
+          <li><b>Simultaneity planes:</b> Drag &beta; from 0. The horizontal planes tilt, showing events once simultaneous in S are time-separated in S&prime;.</li>
+          <li><b>Tick spacing:</b> ct&prime; tick marks spread apart as &beta; grows. This is time dilation made geometric.</li>
+          <li><b>Place an event:</b> Click to place an event at (ct=3, x=2). Watch its ct&prime; and x&prime; values change as you drag &beta; &mdash; same event, different coordinates.</li>
+          <li><b>Near light speed (&beta;=0.99):</b> Both axes nearly on the light line, &gamma; &approx; 7. A moving clock ticks 7 times slower.</li>
+        </ul>
+
+        <h3>Further Reading</h3>
+        <ul>
+          <li><a href="https://www.feynmanlectures.caltech.edu/I_15.html" target="_blank">Feynman Lectures Ch.15: The Special Theory of Relativity</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Lorentz_transformation" target="_blank">Wikipedia: Lorentz transformation</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Minkowski_diagram" target="_blank">Wikipedia: Minkowski diagram</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Rapidity" target="_blank">Wikipedia: Rapidity</a></li>
+        </ul>
+      </div>
+    </div>
+  </div><!-- /canvasArea -->
+</div>
+
+<div id="bottombar">
+  <span><b>Scroll</b> zoom</span>
+  <span><b>Middle-drag</b> pan</span>
+  <span><b>&beta; slider</b> tilts S&prime; axes</span>
+  <span><b>Click</b> place event</span>
+  <span><b>Drag event</b> move it, watch S&prime; coords update live</span>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+// ── Canvas ─────────────────────────────────────────────────────────
+var cv  = document.getElementById('cv');
+var ctx = cv.getContext('2d');
+var W = 0, H = 0;
+
+// View: origin in screen pixels, pixels-per-unit
+var ox = 0, oy = 0, ppu = 50;
+
+function resize(){
+  var area = document.getElementById('canvasArea');
+  W = cv.width  = area.clientWidth;
+  H = cv.height = area.clientHeight;
+  // Centre origin, positive ct upward
+  ox = W * 0.5;
+  oy = H * 0.55;
+}
+new ResizeObserver(resize).observe(document.getElementById('canvasArea'));
+
+// Convert Minkowski (ct, x) <-> screen (px, py)
+function m2s(ct, x){ return { px: ox + x*ppu, py: oy - ct*ppu }; }
+function s2m(px, py){ return { ct: -(py - oy)/ppu, x: (px - ox)/ppu }; }
+
+// ── State ──────────────────────────────────────────────────────────
+var beta = 0.0, gamma = 1.0;
+var animSpeed = 0.0, animDir = 1, lastTs = null;
+var theoryOpen = false;
+var events = []; // { ct, x } placed events
+
+// ── Motion state ───────────────────────────────────────────────────
+var clock = 0;            // advances in ct units each frame
+
+// Moving observer: worldline is x = beta*ct in S (the S' origin)
+var obs = { ct: -6, trail: [] };
+var OBS_TRAIL = 80;
+
+// Two photons emitted from origin, travel along the 45-deg lines
+var photonR = 0, photonL = 0; // ct progress of right/left photon
+var PHOTON_PERIOD = 9.0;
+
+// Ripple: a bright scan line sweeping upward in ct
+var rippleCt  = -8;
+var RIPPLE_SPD = 1.4;   // ct-units per second
+
+// Drag state for placed events
+var dragEvt = { active: false, idx: -1 };
+
+// Toggle element refs (cached once)
+var togEls = {};
+var _togS, _togSP, _togSim, _togHyp, _togGrid, _togCone;
+function cacheTogs(){
+  _togS    = togEls.s.checked;
+  _togSP   = togEls.sp.checked;
+  _togSim  = togEls.sim.checked;
+  _togHyp  = togEls.hyp.checked;
+  _togGrid = togEls.grid.checked;
+  _togCone = togEls.cone.checked;
+}
+
+// DOM refs
+var D = {};
+
+function calcGamma(b){ return b*b >= 1 ? 9999 : 1 / Math.sqrt(1 - b*b); }
+
+// Lorentz boost: (ct, x) in S -> (ct', x') in S'
+function boost(ct, x){
+  return { ct: gamma*(ct - beta*x), x: gamma*(x - beta*ct) };
+}
+
+// ── Draw helpers ───────────────────────────────────────────────────
+
+// Line from Minkowski coords (ct1,x1) to (ct2,x2)
+function mline(ct1,x1, ct2,x2){
+  var a=m2s(ct1,x1), b=m2s(ct2,x2);
+  ctx.moveTo(a.px,a.py); ctx.lineTo(b.px,b.py);
+}
+
+// ── Background grid ────────────────────────────────────────────────
+function drawGrid(){
+  var N = Math.ceil(Math.max(W,H) / ppu) + 2;
+  // Find visible ct/x range
+  var xMin = Math.floor(s2m(0, 0).x) - 1;
+  var xMax = Math.ceil(s2m(W, 0).x)  + 1;
+  var ctMin= Math.floor(s2m(0, H).ct) - 1;
+  var ctMax= Math.ceil(s2m(0, 0).ct)  + 1;
+
+  ctx.strokeStyle = '#0a1828'; ctx.lineWidth = 0.5; ctx.globalAlpha = 0.8;
+  ctx.beginPath();
+  for(var xi = xMin; xi <= xMax; xi++){
+    var p = m2s(0, xi);
+    ctx.moveTo(p.px, 0); ctx.lineTo(p.px, H);
+  }
+  for(var ci = ctMin; ci <= ctMax; ci++){
+    var p = m2s(ci, 0);
+    ctx.moveTo(0, p.py); ctx.lineTo(W, p.py);
+  }
+  ctx.stroke();
+}
+
+// ── S-frame axes ───────────────────────────────────────────────────
+function drawSFrame(){
+  var N = 12;
+  var origin = m2s(0, 0);
+
+  // Axes
+  ctx.globalAlpha = 0.75; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.8;
+  ctx.beginPath();
+  mline(-N, 0,  N, 0);   // ct axis
+  mline(0, -N,  0, N);   // x axis
+  ctx.stroke();
+
+  // ct arrowhead
+  var tip  = m2s(N, 0);
+  var back = m2s(N-0.5, 0);
+  var l    = m2s(N-0.5, -0.2), r = m2s(N-0.5, 0.2);
+  ctx.globalAlpha = 0.9; ctx.fillStyle = '#ffffff';
+  ctx.beginPath(); ctx.moveTo(tip.px,tip.py);
+  ctx.lineTo(l.px,l.py); ctx.lineTo(r.px,r.py); ctx.closePath(); ctx.fill();
+
+  // x arrowhead
+  var tipX = m2s(0, N);
+  var lx = m2s(-0.2, N-0.5), rx = m2s(0.2, N-0.5);
+  ctx.beginPath(); ctx.moveTo(tipX.px,tipX.py);
+  ctx.lineTo(lx.px,lx.py); ctx.lineTo(rx.px,rx.py); ctx.closePath(); ctx.fill();
+
+  // Axis labels
+  var ctL = m2s(N+0.7, 0.2); var xL = m2s(0.3, N+0.6);
+  ctx.globalAlpha = 0.85; ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 14px Orbitron, monospace';
+  ctx.fillText('ct', ctL.px, ctL.py+5);
+  ctx.fillText('x',  xL.px-4, xL.py+5);
+
+  // Tick marks and labels
+  ctx.globalAlpha = 0.5; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  for(var i=-N; i<=N; i++){
+    if(!i) continue;
+    var ta = m2s(i,  0.15), tb = m2s(i, -0.15); // ct ticks
+    ctx.moveTo(ta.px,ta.py); ctx.lineTo(tb.px,tb.py);
+    var ta2 = m2s(0.15, i), tb2 = m2s(-0.15, i); // x ticks
+    ctx.moveTo(ta2.px,ta2.py); ctx.lineTo(tb2.px,tb2.py);
+  }
+  ctx.stroke();
+
+  // Tick number labels (only nearby ones)
+  ctx.fillStyle = '#7ab8d4'; ctx.globalAlpha = 0.5; ctx.font = '9px monospace';
+  for(var i=-N; i<=N; i++){
+    if(!i) continue;
+    if(Math.abs(i) > 10) continue;
+    var tp = m2s(i, -0.35); ctx.fillText(i, tp.px-5, tp.py+4); // ct labels
+    var xp = m2s(-0.35, i); ctx.fillText(i, xp.px-8, xp.py+4); // x labels
+  }
+}
+
+// ── S'-frame axes ──────────────────────────────────────────────────
+function drawSPrimeFrame(){
+  var b = beta, g = gamma, N = 12;
+
+  // ct' axis: direction (ct=1, x=b) in S coords
+  // x'  axis: direction (ct=b, x=1) in S coords
+  var ctpEnd = N, xpEnd = N;
+
+  // Axes (both directions from origin)
+  ctx.globalAlpha = 0.85; ctx.strokeStyle = '#ff9500'; ctx.lineWidth = 2;
+  ctx.beginPath();
+  mline(-ctpEnd, -b*ctpEnd,  ctpEnd, b*ctpEnd); // ct' axis
+  mline(-b*xpEnd, -xpEnd,   b*xpEnd,  xpEnd);  // x'  axis
+  ctx.stroke();
+
+  // ct' arrowhead (at positive tip)
+  var axN = 1/Math.sqrt(1 + b*b);  // normalise direction (b, 1)
+  var perpX = -axN, perpCt = b*axN; // perpendicular
+  var arrowLen = 0.5, perpSize = 0.2;
+  var tipCt = ctpEnd, tipX = b*ctpEnd;
+  var backCt = tipCt - arrowLen, backX = tipX - arrowLen*b;
+  var lp = m2s(backCt + perpSize*perpCt, backX + perpSize*perpX);
+  var rp = m2s(backCt - perpSize*perpCt, backX - perpSize*perpX);
+  var tiP = m2s(tipCt, tipX);
+  ctx.globalAlpha = 0.9; ctx.fillStyle = '#ff9500';
+  ctx.beginPath(); ctx.moveTo(tiP.px,tiP.py);
+  ctx.lineTo(lp.px,lp.py); ctx.lineTo(rp.px,rp.py); ctx.closePath(); ctx.fill();
+
+  // Labels
+  var ctpL = m2s(ctpEnd + 0.3, b*ctpEnd + 0.1);
+  var xpL  = m2s(b*xpEnd + 0.3, xpEnd + 0.3);
+  ctx.globalAlpha = 0.9; ctx.fillStyle = '#ff9500';
+  ctx.font = 'bold 13px Orbitron, monospace';
+  ctx.fillText("ct'", ctpL.px, ctpL.py+4);
+  ctx.fillText("x'",  xpL.px,  xpL.py+5);
+
+  // Tick marks along ct' axis at proper-time spacing (gamma apart in S)
+  var nTick = 9;
+  ctx.globalAlpha = 0.45; ctx.strokeStyle = '#ff9500'; ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  var perpLen = 0.14;
+  for(var i = -nTick; i <= nTick; i++){
+    if(!i) continue;
+    // ct' tick i sits at (ct = i*g, x = i*g*b) in S
+    var tc = i*g, xc = i*g*b;
+    // perp direction to ct' axis is (b, -1)/norm -- normalised
+    var pn = 1/Math.sqrt(1+b*b);
+    var ta = m2s(tc + perpLen*b*pn,   xc - perpLen*pn);
+    var tb2 = m2s(tc - perpLen*b*pn,  xc + perpLen*pn);
+    ctx.moveTo(ta.px,ta.py); ctx.lineTo(tb2.px,tb2.py);
+  }
+  // x' ticks along x' axis at proper-length spacing
+  for(var i = -nTick; i <= nTick; i++){
+    if(!i) continue;
+    var tc = i*g*b, xc = i*g;
+    // perp direction to x' axis is (-b, 1)/norm (rotated 90 from x' direction)
+    var pn = 1/Math.sqrt(1+b*b);
+    var ta = m2s(tc + perpLen*pn,   xc + perpLen*b*pn);
+    var tb2 = m2s(tc - perpLen*pn,  xc - perpLen*b*pn);
+    ctx.moveTo(ta.px,ta.py); ctx.lineTo(tb2.px,tb2.py);
+  }
+  ctx.stroke();
+
+  // Small tick labels on ct' (every 2 ticks, within view)
+  ctx.fillStyle = '#ff9500'; ctx.globalAlpha = 0.55; ctx.font = '8px monospace';
+  for(var i = -nTick; i <= nTick; i += 2){
+    if(!i) continue;
+    var tc = i*g, xc = i*g*b;
+    var p = m2s(tc, xc);
+    if(p.px < 5 || p.px > W-5 || p.py < 5 || p.py > H-5) continue;
+    ctx.fillText(i, p.px + 5, p.py - 3);
+  }
+}
+
+// ── Simultaneity planes ────────────────────────────────────────────
+function drawSimultaneityPlanes(){
+  var b = beta, g = gamma;
+  // Lines of constant t' satisfy ct = b*x + n/g
+  var xR = 14;
+
+  ctx.setLineDash([6,5]);
+  // All non-zero planes
+  ctx.globalAlpha = 0.18; ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 0.8;
+  ctx.beginPath();
+  for(var n = -10; n <= 10; n++){
+    if(!n) continue;
+    var ct1 = b*(-xR) + n/g, ct2 = b*xR + n/g;
+    mline(ct1, -xR, ct2, xR);
+  }
+  ctx.stroke();
+  // t' = 0 plane (x' axis) bolder
+  ctx.globalAlpha = 0.45; ctx.lineWidth = 1.2;
+  ctx.beginPath(); mline(b*(-xR),-xR, b*xR,xR); ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+// ── Invariant hyperbola ────────────────────────────────────────────
+function drawInvariantHyperbola(){
+  var xR = 13, N = 80;
+  ctx.setLineDash([4,4]);
+  ctx.globalAlpha = 0.3; ctx.strokeStyle = '#ff9500'; ctx.lineWidth = 0.9;
+  ctx.beginPath();
+  for(var tau = 1; tau <= 6; tau++){
+    // Future timelike: ct = sqrt(tau^2 + x^2)
+    var started = false;
+    for(var i = 0; i <= N; i++){
+      var x = -xR + i*(2*xR/N);
+      var ct = Math.sqrt(tau*tau + x*x);
+      var p = m2s(ct, x);
+      if(p.px < -20 || p.px > W+20 || p.py < -20 || p.py > H+20){ started=false; continue; }
+      if(!started){ ctx.moveTo(p.px,p.py); started=true; } else ctx.lineTo(p.px,p.py);
+    }
+    // Past timelike: ct = -sqrt(tau^2 + x^2)
+    started = false;
+    for(var i = 0; i <= N; i++){
+      var x = -xR + i*(2*xR/N);
+      var ct = -Math.sqrt(tau*tau + x*x);
+      var p = m2s(ct, x);
+      if(p.px < -20 || p.px > W+20 || p.py < -20 || p.py > H+20){ started=false; continue; }
+      if(!started){ ctx.moveTo(p.px,p.py); started=true; } else ctx.lineTo(p.px,p.py);
+    }
+    // Spacelike: x = +/- sqrt(tau^2 + ct^2)
+    for(var sign = 1; sign >= -1; sign -= 2){
+      started = false;
+      for(var i = 0; i <= N; i++){
+        var ct = -xR + i*(2*xR/N);
+        var xv = sign*Math.sqrt(tau*tau + ct*ct);
+        if(Math.abs(xv) > xR+1){ started=false; continue; }
+        var p = m2s(ct, xv);
+        if(p.px < -20 || p.px > W+20 || p.py < -20 || p.py > H+20){ started=false; continue; }
+        if(!started){ ctx.moveTo(p.px,p.py); started=true; } else ctx.lineTo(p.px,p.py);
+      }
+    }
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+// ── Light cone ─────────────────────────────────────────────────────
+function drawLightCone(){
+  var R = 14;
+  // Future cone fill (triangle from origin to top corners)
+  var tip = m2s(0,0), tl = m2s(R,-R), tr = m2s(R,R);
+  ctx.globalAlpha = 0.07; ctx.fillStyle = '#0044ff';
+  ctx.beginPath(); ctx.moveTo(tip.px,tip.py);
+  ctx.lineTo(tl.px,tl.py); ctx.lineTo(tr.px,tr.py); ctx.closePath(); ctx.fill();
+  // Past cone fill
+  var bl = m2s(-R,-R), br = m2s(-R,R);
+  ctx.fillStyle = '#ff2244';
+  ctx.beginPath(); ctx.moveTo(tip.px,tip.py);
+  ctx.lineTo(bl.px,bl.py); ctx.lineTo(br.px,br.py); ctx.closePath(); ctx.fill();
+  // Light lines
+  ctx.globalAlpha = 0.35; ctx.lineWidth = 1.3;
+  ctx.strokeStyle = '#00b4ff';
+  ctx.beginPath(); mline(-R,-R, R,R); ctx.stroke();
+  ctx.strokeStyle = '#ff3c64';
+  ctx.beginPath(); mline(-R,R, R,-R); ctx.stroke();
+  // Tiny apex dot
+  ctx.globalAlpha = 0.8; ctx.fillStyle = '#00ffcc';
+  ctx.beginPath(); ctx.arc(tip.px,tip.py, 4, 0, Math.PI*2); ctx.fill();
+}
+
+// ── Moving observer (S' origin traveller) ──────────────────────────
+function drawObserver(){
+  // The S' origin traces x = beta*ct in S. We draw it as a glowing dot
+  // with a fading trail along the ct' axis direction.
+  var b = beta;
+  var ct = obs.ct;
+  var x  = b * ct;
+
+  // Trail: fade from old to current
+  if(obs.trail.length > 1){
+    for(var i = 1; i < obs.trail.length; i++){
+      var a0 = obs.trail[i-1], a1 = obs.trail[i];
+      var alpha = (i / obs.trail.length) * 0.55;
+      var p0 = m2s(a0.ct, a0.x), p1 = m2s(a1.ct, a1.x);
+      ctx.globalAlpha = alpha; ctx.strokeStyle = '#ff9500';
+      ctx.lineWidth = 1.5 + (i/obs.trail.length)*1.0;
+      ctx.beginPath(); ctx.moveTo(p0.px,p0.py); ctx.lineTo(p1.px,p1.py); ctx.stroke();
+    }
+  }
+
+  // Glow ring
+  var p = m2s(ct, x);
+  ctx.shadowColor = '#ff9500'; ctx.shadowBlur = 22;
+  ctx.globalAlpha = 0.85; ctx.fillStyle = '#ff9500';
+  ctx.beginPath(); ctx.arc(p.px,p.py, 7, 0, Math.PI*2); ctx.fill();
+  ctx.shadowBlur = 0;
+  // White core
+  ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+  ctx.beginPath(); ctx.arc(p.px,p.py, 3, 0, Math.PI*2); ctx.fill();
+  // Label
+  ctx.globalAlpha = 0.8; ctx.fillStyle = '#ff9500';
+  ctx.font = 'bold 8px Orbitron, monospace';
+  ctx.fillText("S\u2032", p.px + 10, p.py + 4);
+}
+
+// ── Photon pulses along the light cone ─────────────────────────────
+function drawPhotons(){
+  // Two photons emitted from origin, one going right (+x), one left (-x)
+  // both at speed c (45 deg lines). They wrap periodically.
+  var rCt = photonR % PHOTON_PERIOD;
+  var lCt = photonL % PHOTON_PERIOD;
+
+  function drawPhoton(ct, x, col){
+    var p = m2s(ct, x);
+    // Clip to canvas
+    if(p.px < -20 || p.px > W+20 || p.py < -20 || p.py > H+20) return;
+    // Trail back along the light line
+    var trailLen = Math.min(ct, 2.5);
+    var trailPts = 12;
+    for(var i = 0; i < trailPts; i++){
+      var f = i/trailPts;
+      var tct = ct - f*trailLen;
+      var tx  = x  - (x > 0 ? 1 : -1)*f*trailLen;
+      var tp = m2s(tct, tx);
+      ctx.globalAlpha = (1 - f) * 0.4;
+      ctx.strokeStyle = col; ctx.lineWidth = 2;
+      if(i === 0){ ctx.beginPath(); ctx.moveTo(tp.px,tp.py); }
+      else ctx.lineTo(tp.px,tp.py);
+    }
+    ctx.stroke();
+    // Dot
+    ctx.shadowColor = col; ctx.shadowBlur = 18;
+    ctx.globalAlpha = 0.9; ctx.fillStyle = col;
+    ctx.beginPath(); ctx.arc(p.px,p.py, 5, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(p.px,p.py, 2, 0, Math.PI*2); ctx.fill();
+  }
+
+  drawPhoton(rCt,  rCt, '#00b4ff');  // rightward: x = ct
+  drawPhoton(lCt, -lCt, '#00b4ff');  // leftward:  x = -ct
+}
+
+// ── Ripple: a scan highlight that sweeps upward ─────────────────────
+function drawRipple(){
+  var ct = rippleCt;
+  var xR = 14;
+  // The "now" line in S is horizontal (ct = const)
+  // Highlight it with a bright cyan glow band
+  var band = 0.35; // half-width in ct units
+  var p1 = m2s(ct, -xR), p2 = m2s(ct, xR);
+  var bandPx = band * ppu;
+
+  // Gradient band across the screen
+  var grad = ctx.createLinearGradient(0, p1.py - bandPx, 0, p1.py + bandPx);
+  grad.addColorStop(0,    'rgba(0,255,204,0)');
+  grad.addColorStop(0.4,  'rgba(0,255,204,0.08)');
+  grad.addColorStop(0.5,  'rgba(0,255,204,0.18)');
+  grad.addColorStop(0.6,  'rgba(0,255,204,0.08)');
+  grad.addColorStop(1,    'rgba(0,255,204,0)');
+  ctx.globalAlpha = 1; ctx.fillStyle = grad;
+  ctx.fillRect(0, p1.py - bandPx, W, bandPx * 2);
+
+  // Thin bright line at ct = const
+  ctx.globalAlpha = 0.45; ctx.strokeStyle = '#00ffcc'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(0, p1.py); ctx.lineTo(W, p1.py); ctx.stroke();
+}
+
+// ── Placed events ──────────────────────────────────────────────────
+function drawEvents(){
+  for(var i=0; i<events.length; i++){
+    var ev = events[i];
+    var p = m2s(ev.ct, ev.x);
+    // Glow
+    ctx.shadowColor = '#c084fc'; ctx.shadowBlur = 16;
+    ctx.globalAlpha = 0.7; ctx.fillStyle = '#c084fc';
+    ctx.beginPath(); ctx.arc(p.px,p.py, 6, 0, Math.PI*2); ctx.fill();
+    ctx.shadowBlur = 0;
+    ctx.globalAlpha = 1; ctx.fillStyle = '#ffffff';
+    ctx.beginPath(); ctx.arc(p.px,p.py, 2.5, 0, Math.PI*2); ctx.fill();
+    // Small label: event number
+    ctx.fillStyle = '#c084fc'; ctx.globalAlpha = 0.8;
+    ctx.font = '8px Orbitron, monospace';
+    ctx.fillText('E' + (i+1), p.px+8, p.py-5);
+  }
+}
+
+// ── Main render ────────────────────────────────────────────────────
+function render(ts){
+  if(!lastTs) lastTs = ts;
+  var dt = Math.min((ts - lastTs)/1000, 0.05);
+  lastTs = ts;
+
+  // Advance beta animation
+  if(animSpeed > 0){
+    var nb = beta + animDir * animSpeed * dt * 0.5;
+    if(nb >  0.994){ nb =  0.994; animDir = -1; }
+    if(nb < -0.994){ nb = -0.994; animDir =  1; }
+    setBeta(nb, true);
+  }
+
+  // Advance motion clock (ct-units per second = ppu-independent)
+  var ctPerSec = 1.4;
+  clock += dt * ctPerSec;
+
+  // Advance moving observer along ct' axis
+  obs.ct += dt * ctPerSec;
+  if(obs.ct > 9) obs.ct = -7;
+  obs.trail.push({ ct: obs.ct, x: beta * obs.ct });
+  if(obs.trail.length > OBS_TRAIL) obs.trail.shift();
+
+  // Advance photons
+  photonR += dt * ctPerSec;
+  photonL += dt * ctPerSec;
+
+  // Advance ripple
+  rippleCt += dt * RIPPLE_SPD;
+  if(rippleCt > 9) rippleCt = -8;
+
+  cacheTogs();
+
+  ctx.fillStyle = '#020408'; ctx.globalAlpha = 1; ctx.fillRect(0,0,W,H);
+
+  if(_togGrid) drawGrid();
+  if(_togCone) drawLightCone();
+  drawRipple();
+  if(_togHyp)  drawInvariantHyperbola();
+  if(_togSim)  drawSimultaneityPlanes();
+  if(_togS)    drawSFrame();
+  if(_togSP){  drawSPrimeFrame(); drawObserver(); }
+  drawPhotons();
+  drawEvents();
+
+  // Beta pill overlay (when boosted)
+  if(Math.abs(beta) > 0.005){
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(0,5,15,0.78)';
+    ctx.fillRect(16,16,190,66);
+    ctx.strokeStyle = 'rgba(255,149,0,0.3)'; ctx.lineWidth = 1;
+    ctx.strokeRect(16,16,190,66);
+    ctx.fillStyle = 'rgba(255,149,0,0.5)'; ctx.font = '7px Orbitron,monospace';
+    ctx.fillText("S\u2032 FRAME", 26, 30);
+    ctx.fillStyle = '#ff9500'; ctx.font = 'bold 13px Orbitron,monospace';
+    ctx.shadowColor = 'rgba(255,149,0,0.8)'; ctx.shadowBlur = 10;
+    ctx.fillText('\u03b2 = ' + beta.toFixed(3) + 'c', 26, 49);
+    ctx.shadowBlur = 0;
+    ctx.fillStyle = '#7ab8d4'; ctx.font = '9px monospace';
+    ctx.fillText('\u03b3 = ' + gamma.toFixed(4) + '   \u03b8 = ' + (Math.atan(beta)*180/Math.PI).toFixed(1) + '\u00b0', 26, 68);
+  }
+
+  requestAnimationFrame(render);
+}
+
+// ── Controls ───────────────────────────────────────────────────────
+function setBeta(b, skipSlider){
+  beta  = Math.max(-0.9999, Math.min(0.9999, b));
+  gamma = calcGamma(beta);
+  var theta = Math.atan(beta)*180/Math.PI;
+  if(!skipSlider) D.slBeta.value = Math.round(beta*1000);
+  D.lblBeta.textContent  = beta.toFixed(3);
+  D.svGamma.textContent  = gamma.toFixed(4);
+  D.svBeta.textContent   = beta.toFixed(3);
+  D.svTheta.textContent  = theta.toFixed(1) + '\u00b0';
+  D.svDil.textContent    = gamma.toFixed(3);
+  D.svCon.textContent    = (1/gamma).toFixed(3);
+  D.rdBeta.textContent   = beta.toFixed(3);
+  D.rdGamma.textContent  = gamma.toFixed(4);
+  D.rdTheta.textContent  = theta.toFixed(1) + '\u00b0';
+  D.rdDil.textContent    = gamma.toFixed(3);
+  D.rdCon.textContent    = (1/gamma).toFixed(3);
+  updateEventList();
+}
+
+function onBeta(v){ setBeta(v/1000); clearPresets(); }
+function onSpeed(v){
+  animSpeed = v/10;
+  D.lblSpd.textContent = animSpeed.toFixed(1) + 'x';
+}
+
+function clearPresets(){
+  for(var i=0;i<7;i++){ var b=document.getElementById('pr-'+i); if(b) b.classList.remove('active'); }
+}
+var PRESETS = [0, 0.3, 0.5, 0.8, 0.95, 0.99, -0.6];
+function loadPreset(i){ setBeta(PRESETS[i]); clearPresets(); document.getElementById('pr-'+i).classList.add('active'); }
+
+function toggleTheory(){
+  theoryOpen = !theoryOpen;
+  document.getElementById('theoryDrawer').classList.toggle('open', theoryOpen);
+}
+
+// ── Event placement ────────────────────────────────────────────────
+function addEvent(px, py){
+  var m = s2m(px, py);
+  events.push({ ct: Math.round(m.ct*100)/100, x: Math.round(m.x*100)/100 });
+  updateEventList();
+}
+function clearEvents(){
+  events = [];
+  updateEventList();
+}
+function updateEventList(){
+  var el = document.getElementById('event-list');
+  if(!events.length){ el.innerHTML = '<span style="opacity:.4;font-size:7px">no events placed</span>'; return; }
+  var html = '';
+  for(var i=0; i<events.length; i++){
+    var ev = events[i];
+    var bp = boost(ev.ct, ev.x);
+    html += '<div style="margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid #081825">'
+      + '<span style="color:#c084fc;font-family:Orbitron,monospace;font-size:7px">E' + (i+1) + '</span><br>'
+      + '<span style="color:#aaa;font-size:7px">S: &nbsp;</span><span style="color:#ffffff;font-size:8px">ct=' + ev.ct.toFixed(2) + '  x=' + ev.x.toFixed(2) + '</span><br>'
+      + '<span style="color:#aaa;font-size:7px">S&prime;: </span><span style="color:#ff9500;font-size:8px">ct&prime;=' + bp.ct.toFixed(2) + '  x&prime;=' + bp.x.toFixed(2) + '</span>'
+      + '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ── Zoom & pan ─────────────────────────────────────────────────────
+cv.addEventListener('wheel', function(e){
+  e.preventDefault();
+  var mx = e.clientX - cv.getBoundingClientRect().left;
+  var my = e.clientY - cv.getBoundingClientRect().top;
+  var factor = e.deltaY < 0 ? 1.12 : 0.89;
+  ox = mx + (ox - mx)*factor;
+  oy = my + (oy - my)*factor;
+  ppu = Math.max(20, Math.min(200, ppu*factor));
+}, {passive:false});
+
+var pan = {active:false, lx:0, ly:0};
+cv.addEventListener('mousedown', function(e){
+  if(e.button === 1){ e.preventDefault(); pan.active=true; pan.lx=e.clientX; pan.ly=e.clientY; }
+});
+window.addEventListener('mousemove', function(e){
+  if(pan.active){
+    ox += e.clientX - pan.lx; oy += e.clientY - pan.ly;
+    pan.lx = e.clientX; pan.ly = e.clientY;
+  }
+});
+window.addEventListener('mouseup', function(){ pan.active = false; });
+
+// Left-button: drag existing events or place new one
+var didDrag = false;
+cv.addEventListener('mousedown', function(e){
+  if(e.button !== 0) return;
+  var rect = cv.getBoundingClientRect();
+  var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+  didDrag = false;
+  // Check proximity to placed events (last one on top)
+  for(var i = events.length-1; i >= 0; i--){
+    var p = m2s(events[i].ct, events[i].x);
+    if(Math.abs(p.px-mx) < 16 && Math.abs(p.py-my) < 16){
+      dragEvt.active = true; dragEvt.idx = i;
+      cv.style.cursor = 'grabbing';
+      return;
+    }
+  }
+  dragEvt.active = false; dragEvt.idx = -1;
+});
+
+cv.addEventListener('mousemove', function(e){
+  var rect = cv.getBoundingClientRect();
+  var mx = e.clientX - rect.left, my = e.clientY - rect.top;
+
+  if(dragEvt.active && dragEvt.idx >= 0){
+    didDrag = true;
+    var m = s2m(mx, my);
+    events[dragEvt.idx].ct = Math.round(m.ct*100)/100;
+    events[dragEvt.idx].x  = Math.round(m.x *100)/100;
+    updateEventList();
+    return;
+  }
+
+  // Cursor hint
+  var nearAny = false;
+  for(var i = 0; i < events.length; i++){
+    var p = m2s(events[i].ct, events[i].x);
+    if(Math.abs(p.px-mx) < 16 && Math.abs(p.py-my) < 16){ nearAny = true; break; }
+  }
+  cv.style.cursor = nearAny ? 'grab' : 'crosshair';
+
+  // Hover tooltip
+  var tip = document.getElementById('evtip');
+  var hit = -1;
+  for(var i = 0; i < events.length; i++){
+    var p = m2s(events[i].ct, events[i].x);
+    if(Math.abs(p.px-mx) < 14 && Math.abs(p.py-my) < 14){ hit=i; break; }
+  }
+  if(hit >= 0){
+    var ev = events[hit], bp = boost(ev.ct, ev.x);
+    tip.innerHTML = '<b style="color:#c084fc">E'+(hit+1)+'</b>  <span style="color:#666;font-size:7px">drag to move</span><br>'
+      + '<span class="ev-s">S: &nbsp;ct='+ev.ct.toFixed(2)+'  x='+ev.x.toFixed(2)+'</span><br>'
+      + '<span class="ev-sp">S\u2032: ct\u2032='+bp.ct.toFixed(2)+'  x\u2032='+bp.x.toFixed(2)+'</span>';
+    tip.style.display = 'block';
+    tip.style.left = (mx+14)+'px'; tip.style.top = (my-10)+'px';
+  } else {
+    tip.style.display = 'none';
+  }
+});
+
+window.addEventListener('mouseup', function(){
+  if(dragEvt.active){ dragEvt.active=false; cv.style.cursor='crosshair'; }
+});
+
+cv.addEventListener('click', function(e){
+  if(didDrag){ didDrag=false; return; }
+  if(dragEvt.idx >= 0){ dragEvt.idx=-1; return; }
+  if(theoryOpen) return;
+  var rect = cv.getBoundingClientRect();
+  var mx = e.clientX-rect.left, my = e.clientY-rect.top;
+  // Don't place on top of existing event
+  for(var i=0;i<events.length;i++){
+    var p=m2s(events[i].ct,events[i].x);
+    if(Math.abs(p.px-mx)<16&&Math.abs(p.py-my)<16) return;
+  }
+  addEvent(mx, my);
+});
+
+cv.addEventListener('mouseleave', function(){
+  document.getElementById('evtip').style.display='none';
+});
+
+// ── View reset ─────────────────────────────────────────────────────
+function resetView(){
+  ox = W * 0.5; oy = H * 0.55; ppu = 50;
+}
+
+// ── Expose globals ─────────────────────────────────────────────────
+window.onBeta=onBeta; window.onSpeed=onSpeed; window.loadPreset=loadPreset;
+window.toggleTheory=toggleTheory; window.clearEvents=clearEvents; window.resetView=resetView;
+
+// ── Init ──────────────────────────────────────────────────────────
+function init(){
+  togEls = {
+    s:    document.getElementById('tog-s'),
+    sp:   document.getElementById('tog-sp'),
+    sim:  document.getElementById('tog-sim'),
+    hyp:  document.getElementById('tog-hyp'),
+    grid: document.getElementById('tog-grid'),
+    cone: document.getElementById('tog-cone')
+  };
+  D = {
+    slBeta:  document.getElementById('sl-beta'),
+    lblBeta: document.getElementById('lbl-beta'),
+    lblSpd:  document.getElementById('lbl-speed'),
+    svGamma: document.getElementById('sv-gamma'),
+    svBeta:  document.getElementById('sv-beta'),
+    svTheta: document.getElementById('sv-theta'),
+    svDil:   document.getElementById('sv-dilation'),
+    svCon:   document.getElementById('sv-contract'),
+    rdBeta:  document.getElementById('rd-beta'),
+    rdGamma: document.getElementById('rd-gamma'),
+    rdTheta: document.getElementById('rd-theta'),
+    rdDil:   document.getElementById('rd-dil'),
+    rdCon:   document.getElementById('rd-con')
+  };
+  updateEventList();
+  resize();
+  ox = W*0.5; oy = H*0.55; ppu = 50;
+  setBeta(0);
+  requestAnimationFrame(render);
+}
+
+init();
+})();
+</script>
+</body>
+</html>
