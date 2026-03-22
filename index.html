@@ -1028,6 +1028,176 @@ footer {
   letter-spacing: -0.01em;
   flex-shrink: 0;
 }
+
+/* ══════════════════════════════════════════════════
+   REVISION SECTION
+   ══════════════════════════════════════════════════ */
+
+/* Filter bar */
+.rev-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.8rem;
+}
+
+.rev-filter-btn {
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.75rem;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--ink-4);
+  cursor: pointer;
+  transition: all 0.14s;
+}
+.rev-filter-btn:hover {
+  border-color: var(--border-mid);
+  color: var(--ink-2);
+  background: var(--bg-raised);
+}
+.rev-filter-btn.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+/* Grid of notes cards */
+.rev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* Individual notes card */
+.rev-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.18s, transform 0.18s;
+  opacity: 0;
+  animation: rise 0.45s ease forwards;
+}
+.rev-card:hover {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  transform: translateY(-2px);
+}
+.rev-card[hidden] { display: none !important; }
+
+/* Coloured top strip */
+.rev-card-strip {
+  height: 4px;
+  flex-shrink: 0;
+}
+
+.rev-card-body {
+  padding: 1.2rem 1.4rem 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rev-card-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rev-tag {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.16rem 0.5rem;
+  border-radius: 100px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.rev-tag-exam   { color: #2D7A3A; background: #EFF8F1; border-color: #C6E8CB; }
+.rev-tag-topic  { color: var(--red); background: var(--red-bg); border-color: var(--red-border); }
+.rev-tag-level  { color: var(--ink-4); background: var(--bg-raised); border-color: var(--border); }
+
+.rev-card-title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.rev-card-desc {
+  font-size: 0.8rem;
+  color: var(--ink-3);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.rev-card-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin-top: 0.2rem;
+}
+.rev-card-chips .chip { font-size: 0.5rem; }
+
+.rev-card-foot {
+  padding: 0.8rem 1.4rem;
+  background: var(--bg-raised);
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.rev-open-btn {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  background: transparent;
+  border: 1px solid var(--red-border);
+  padding: 0.42rem 0.9rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.14s, border-color 0.14s;
+  white-space: nowrap;
+}
+.rev-open-btn:hover { background: var(--red-bg); border-color: var(--red); }
+
+.rev-meta {
+  font-family: var(--mono);
+  font-size: 0.52rem;
+  color: var(--ink-5);
+  letter-spacing: 0.06em;
+}
+
+/* Empty state */
+.rev-empty {
+  grid-column: 1 / -1;
+  padding: 2.5rem 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-4);
+  display: none;
+}
+.rev-empty.visible { display: block; }
 </style>
 </head>
 <body>
@@ -1041,6 +1211,7 @@ footer {
     <ul class="nav-links">
       <li><a href="#visualisations" class="current" onclick="navScrollTo('visualisations',event)">Visualisations</a></li>
       <li><a href="#coming-soon" onclick="navScrollTo('coming-soon',event)">Coming Soon</a></li>
+      <li><a href="#revision" onclick="navScrollTo('revision',event)">Revision</a></li>
       <li><a href="#about" onclick="navScrollTo('about',event)">About</a></li>
     </ul>
 
@@ -1807,6 +1978,116 @@ footer {
 
 <div class="divider"></div>
 
+<!-- ── REVISION ────────────────────────────────────── -->
+<section id="revision">
+  <div class="sec-head">
+    <div>
+      <p class="sec-super">Revision · Notes and Methods</p>
+      <h2 class="sec-h2">Revision Resources</h2>
+    </div>
+    <span class="sec-aside">KaTeX · Exam Methods</span>
+  </div>
+
+  <div class="grid-wrap" style="padding-bottom: 0;">
+
+    <!-- Filter bar -->
+    <div class="rev-filters" role="group" aria-label="Filter revision notes by subject">
+      <button class="rev-filter-btn active" data-filter="all" onclick="revFilter('all',this)">All</button>
+      <button class="rev-filter-btn" data-filter="physics" onclick="revFilter('physics',this)">Physics</button>
+      <button class="rev-filter-btn" data-filter="maths" onclick="revFilter('maths',this)">Maths</button>
+      <button class="rev-filter-btn" data-filter="as" onclick="revFilter('as',this)">AS Level</button>
+      <button class="rev-filter-btn" data-filter="a2" onclick="revFilter('a2',this)">A2 Level</button>
+    </div>
+
+    <!-- Notes grid -->
+    <div class="rev-grid" id="rev-grid">
+
+      <!-- ── OCR AS PHYSICS A ── -->
+      <div class="rev-card" data-subjects="physics as" style="animation-delay:0.05s">
+        <div class="rev-card-strip" style="background:var(--red);"></div>
+        <div class="rev-card-body">
+          <div class="rev-card-eyebrow">
+            <span class="rev-tag rev-tag-exam">● Live</span>
+            <span class="rev-tag rev-tag-topic">Physics</span>
+            <span class="rev-tag rev-tag-level">AS Level</span>
+          </div>
+          <h3 class="rev-card-title">OCR AS Physics A<br>H156/01 Breadth in Physics</h3>
+          <p class="rev-card-desc">Exam methods extracted from 2023 and 2024 mark schemes. Every formula rendered with KaTeX. Step-by-step mark-scoring techniques for MCQ and structured questions, with trap warnings from real mark schemes.</p>
+          <div class="rev-card-chips">
+            <span class="chip">KaTeX equations</span>
+            <span class="chip">2023 + 2024 papers</span>
+            <span class="chip">SI units</span>
+            <span class="chip">Forces + momentum</span>
+            <span class="chip">Stokes' law</span>
+            <span class="chip">Young modulus</span>
+            <span class="chip">Electricity</span>
+            <span class="chip">Waves</span>
+            <span class="chip">Quantum physics</span>
+            <span class="chip">Mark-scheme traps</span>
+          </div>
+        </div>
+        <div class="rev-card-foot">
+          <a href="ocr_as_physics_notes.html" target="_blank" class="rev-open-btn">Open Notes ↗</a>
+          <span class="rev-meta">7 sections · 14 methods</span>
+        </div>
+      </div>
+
+      <!-- ── PLACEHOLDER: More notes coming ── -->
+      <div class="rev-card" data-subjects="physics as" style="animation-delay:0.1s;opacity:0.55;pointer-events:none;">
+        <div class="rev-card-strip" style="background:var(--border-mid);"></div>
+        <div class="rev-card-body">
+          <div class="rev-card-eyebrow">
+            <span class="rev-tag rev-tag-level">Coming soon</span>
+            <span class="rev-tag rev-tag-topic">Physics</span>
+            <span class="rev-tag rev-tag-level">AS Level</span>
+          </div>
+          <h3 class="rev-card-title">OCR AS Physics A<br>H156/02 Depth in Physics</h3>
+          <p class="rev-card-desc">Paper 2 exam methods, covering experimental skills, data analysis and the full depth topic. Will be added when past papers are processed.</p>
+          <div class="rev-card-chips">
+            <span class="chip">Paper 2</span>
+            <span class="chip">Experimental skills</span>
+            <span class="chip">Data analysis</span>
+          </div>
+        </div>
+        <div class="rev-card-foot">
+          <span class="rev-open-btn" style="opacity:0.4;cursor:default;pointer-events:none;">Coming soon</span>
+          <span class="rev-meta">In progress</span>
+        </div>
+      </div>
+
+      <!-- ── PLACEHOLDER: Maths ── -->
+      <div class="rev-card" data-subjects="maths as a2" style="animation-delay:0.15s;opacity:0.55;pointer-events:none;">
+        <div class="rev-card-strip" style="background:var(--border-mid);"></div>
+        <div class="rev-card-body">
+          <div class="rev-card-eyebrow">
+            <span class="rev-tag rev-tag-level">Coming soon</span>
+            <span class="rev-tag rev-tag-topic" style="color:#3D5FA8;background:#EEF2FC;border-color:#C5CEE8;">Maths</span>
+            <span class="rev-tag rev-tag-level">AS / A2</span>
+          </div>
+          <h3 class="rev-card-title">A Level Mathematics<br>Revision Notes</h3>
+          <p class="rev-card-desc">Exam methods for pure mathematics, statistics and mechanics. Will cover all major topics with KaTeX-rendered formulas and worked examples.</p>
+          <div class="rev-card-chips">
+            <span class="chip">Pure</span>
+            <span class="chip">Statistics</span>
+            <span class="chip">Mechanics</span>
+          </div>
+        </div>
+        <div class="rev-card-foot">
+          <span class="rev-open-btn" style="opacity:0.4;cursor:default;pointer-events:none;">Coming soon</span>
+          <span class="rev-meta">In progress</span>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="rev-empty" id="rev-empty">No revision notes match this filter yet.</div>
+
+    </div><!-- /rev-grid -->
+
+  </div><!-- /grid-wrap -->
+</section>
+
+<div class="divider"></div>
+
 <!-- ── ABOUT ─────────────────────────────────────────── -->
 <section class="about-section" id="about">
   <div class="sec-head">
@@ -1844,6 +2125,7 @@ footer {
     <ul class="foot-links">
       <li><a href="#visualisations" onclick="navScrollTo('visualisations',event)">Visualisations</a></li>
       <li><a href="#coming-soon" onclick="navScrollTo('coming-soon',event)">Coming Soon</a></li>
+      <li><a href="#revision" onclick="navScrollTo('revision',event)">Revision</a></li>
       <li><a href="#about" onclick="navScrollTo('about',event)">About</a></li>
       <li><a href="#">GitHub</a></li>
     </ul>
@@ -2422,6 +2704,40 @@ footer {
   resize();
   draw();
 }());
+</script>
+
+<script>
+/* ── Revision tab filter ─── */
+function revFilter(subject, btn) {
+  /* update button states */
+  document.querySelectorAll('.rev-filter-btn').forEach(function(b) {
+    b.classList.remove('active');
+  });
+  btn.classList.add('active');
+
+  /* show/hide cards */
+  var cards = document.querySelectorAll('#rev-grid .rev-card[data-subjects]');
+  var visible = 0;
+  cards.forEach(function(card) {
+    var subjects = card.getAttribute('data-subjects') || '';
+    var show = subject === 'all' || subjects.indexOf(subject) !== -1;
+    card.hidden = !show;
+    if (show) visible++;
+  });
+
+  /* empty state */
+  var empty = document.getElementById('rev-empty');
+  if (empty) empty.classList.toggle('visible', visible === 0);
+
+  /* scroll to section smoothly */
+  var section = document.getElementById('revision');
+  if (section) {
+    var nav = document.querySelector('.nav');
+    var navH = nav ? nav.offsetHeight : 0;
+    var top = section.getBoundingClientRect().top + window.scrollY - navH - 12;
+    window.scrollTo({ top: top, behavior: 'smooth' });
+  }
+}
 </script>
 
 </body>
