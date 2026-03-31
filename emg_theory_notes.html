@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Enhanced Modified Gravity Theory — PhysViz Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+:root{
+  --ink:#1A1714;--ink2:#3D3730;--ink3:#6B6158;--ink4:#9E958D;--ink5:#C2BAB3;
+  --bg:#F8F6F3;--surf:#FFFFFF;--raised:#F0EDE9;--sunken:#EAE6E1;
+  --border:#DDD8D2;--soft:#E8E4DF;--mid:#C8C2BB;
+  --red:#BE3A2A;--redbg:#FDF1EF;--redbd:#F2D0CB;
+  --blue:#2E74B5;--bluebg:#EFF3FA;--bluebd:#C5D8EE;
+  --green:#1A6644;--greenbg:#EDF7F3;--greenbd:#B8DECE;
+  --amber:#A06B28;--amberbg:#FDF6EE;--amberbd:#E8CFA0;
+  --navy:#1F4E79;--navybg:#F0F6FC;--navybd:#C5D8EE;
+  --purple:#6B3FA0;--purplebg:#F5F0FC;--purplebd:#D4BFF2;
+  --orange:#B85C00;--orangebg:#FFF7EE;--orangebd:#E8C98A;
+  --serif:"Source Serif 4",Georgia,serif;
+  --sans:"DM Sans",system-ui,sans-serif;
+  --mono:"JetBrains Mono","Courier New",monospace;
+  --r:6px;--rl:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;line-height:1.65;-webkit-font-smoothing:antialiased;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;background:rgba(248,246,243,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--soft);display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:52px;gap:1rem;}
+.nav-brand{font-family:var(--serif);font-size:.95rem;font-weight:600;color:var(--ink);white-space:nowrap;}
+.nav-brand b{color:var(--red)}
+.nav-links{display:flex;gap:0;list-style:none;flex-wrap:wrap;}
+.nav-links a{font-size:.72rem;color:var(--ink3);text-decoration:none;padding:.28rem .55rem;border-radius:var(--r);transition:color .12s,background .12s;white-space:nowrap;}
+.nav-links a:hover{color:var(--ink);background:var(--raised)}
+
+/* LAYOUT */
+.wrap{max-width:1000px;margin:0 auto;padding:0 2rem 5rem;}
+
+/* HERO */
+.hero{padding:2.5rem 0 1.8rem;border-bottom:2px solid var(--blue);margin-bottom:2rem;}
+.hero-kicker{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;}
+.hero-kicker::before{content:'';width:14px;height:1px;background:var(--red)}
+.hero h1{font-family:var(--serif);font-size:2.4rem;font-weight:700;line-height:1.08;letter-spacing:-.03em;margin-bottom:.45rem;}
+.hero-sub{font-size:.85rem;color:var(--ink3);line-height:1.7;margin-bottom:1rem;max-width:62ch;}
+.hero-chips{display:flex;flex-wrap:wrap;gap:.35rem;}
+.chip{font-family:var(--mono);font-size:.5rem;font-weight:400;letter-spacing:.06em;color:var(--ink4);background:var(--surf);border:1px solid var(--border);padding:.13rem .4rem;border-radius:100px;}
+
+/* TWO-COLUMN LAYOUT */
+.page-body{display:grid;grid-template-columns:220px 1fr;gap:0;min-height:calc(100vh - 52px);}
+
+/* SIDEBAR TOC */
+.sidebar{position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;border-right:1px solid var(--soft);padding:1.25rem 0;background:var(--surf);}
+.sidebar-mod{font-family:var(--mono);font-size:.52rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink5);padding:.6rem 1.1rem .25rem;display:block;}
+.sidebar a{display:block;font-size:.73rem;color:var(--ink3);text-decoration:none;padding:.28rem 1.1rem .28rem 1.5rem;border-left:2px solid transparent;transition:all .1s;line-height:1.35;}
+.sidebar a:hover{color:var(--ink);background:var(--raised);border-left-color:var(--mid);}
+.sidebar a.active{color:var(--blue);background:var(--bluebg);border-left-color:var(--blue);font-weight:400;}
+
+/* CONTENT */
+.content{padding:0 0 4rem 2.5rem;}
+.sec{margin-top:3rem;}
+.sec-header{border-bottom:2px solid var(--blue);padding-bottom:.6rem;margin-bottom:2rem;}
+.sec-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink4);margin-bottom:.3rem;}
+.sec-title{font-family:var(--serif);font-size:1.8rem;font-weight:700;letter-spacing:-.025em;color:var(--ink);}
+.sub{margin-top:2rem;}
+.sub h3{font-family:var(--serif);font-size:1.1rem;font-weight:600;color:var(--blue);margin-bottom:.75rem;letter-spacing:-.01em;}
+p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.9rem;}
+
+/* Formula block */
+.formula-block{background:var(--surf);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 var(--r) var(--r) 0;padding:.75rem 1.1rem;margin:.6rem 0;overflow-x:auto;}
+.formula-block .katex-display{margin:.25rem 0;text-align:left;}
+.formula-block .katex{font-size:.95rem;}
+.formula-label{font-family:var(--mono);font-size:.52rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.35rem;display:block;}
+.eq-num{float:right;font-family:var(--mono);font-size:.62rem;color:var(--ink4);margin-top:.15rem;}
+
+/* Method box */
+.method{display:grid;grid-template-columns:3px 1fr;border-radius:0 var(--rl) var(--rl) 0;overflow:hidden;margin:.5rem 0;}
+.method-bar{background:var(--blue);}
+.method-inner{background:var(--bluebg);border:1px solid var(--bluebd);border-left:none;padding:.75rem 1rem;}
+.method-title{font-size:.75rem;font-weight:500;color:var(--blue);margin-bottom:.45rem;display:flex;align-items:center;gap:.35rem;}
+.method-title::before{content:'▶';font-size:.55rem;opacity:.7;}
+.method ol,.method ul{padding-left:1.1rem;margin:.25rem 0;}
+.method li{font-size:.8rem;color:var(--ink2);line-height:1.6;margin-bottom:.22rem;}
+.method li strong{color:var(--ink);font-weight:500;}
+.trap{font-size:.76rem;color:var(--red);background:var(--redbg);border:1px solid var(--redbd);border-radius:var(--r);padding:.4rem .75rem .4rem 2.1rem;margin-top:.45rem;line-height:1.6;position:relative;}
+.trap::before{content:'⚠';position:absolute;left:.6rem;top:.42rem;font-size:.82rem;line-height:1;}
+
+/* Definition block */
+.def-block{background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin:.5rem 0;}
+.def-head{background:var(--ink);padding:.42rem .8rem;display:flex;align-items:baseline;gap:.5rem;}
+.def-term{font-family:var(--serif);font-size:.85rem;font-weight:600;color:#fff;}
+.def-tag{font-family:var(--mono);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.18);padding:.08rem .3rem;border-radius:100px;}
+.def-body{padding:.6rem .8rem;font-size:.82rem;color:var(--ink2);line-height:1.68;}
+.def-body strong{color:var(--ink);font-weight:500;}
+
+/* Tip / note */
+.tip{background:var(--greenbg);border:1px solid var(--greenbd);border-left:3px solid var(--green);border-radius:0 var(--r) var(--r) 0;padding:.55rem .85rem;margin:.5rem 0;font-size:.8rem;color:var(--green);line-height:1.62;display:block;}
+.tip strong{font-weight:500;}
+.note-box{background:var(--amberbg);border:1px solid var(--amberbd);border-left:3px solid var(--amber);border-radius:0 var(--r) var(--r) 0;padding:.55rem .85rem;margin:.5rem 0;font-size:.8rem;color:var(--amber);line-height:1.58;}
+.note-box strong{font-weight:500;}
+
+/* Key insight box (navy) */
+.insight{background:var(--navybg);border:1px solid var(--navybd);border-left:3px solid var(--navy);border-radius:0 var(--rl) var(--rl) 0;padding:.7rem 1rem;margin:.5rem 0;}
+.insight-title{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-bottom:.45rem;}
+.insight p,.insight li{font-size:.8rem;color:var(--navy);line-height:1.62;}
+.insight ul{padding-left:1.1rem;margin:.25rem 0;}
+.insight li{margin-bottom:.2rem;}
+
+/* Scale behaviour table */
+.scale-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:.65rem 0 1rem;}
+.scale-table thead th{background:var(--blue);color:#fff;font-weight:500;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.48rem .7rem;text-align:left;}
+.scale-table tbody tr:nth-child(odd){background:var(--bluebg);}
+.scale-table tbody tr:nth-child(even){background:var(--surf);}
+.scale-table td{padding:.44rem .7rem;vertical-align:top;border-bottom:1px solid var(--soft);font-size:.79rem;color:var(--ink2);}
+.scale-table td:first-child{font-weight:500;color:var(--blue);font-family:var(--mono);font-size:.72rem;white-space:nowrap;}
+.scale-table .katex{font-size:.8rem;}
+
+/* Comparison table */
+.comp-table{width:100%;border-collapse:collapse;font-size:.79rem;margin:.65rem 0 1rem;}
+.comp-table thead th{background:var(--navy);color:#fff;font-weight:500;font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.48rem .65rem;text-align:left;}
+.comp-table tbody tr:nth-child(odd){background:var(--navybg);}
+.comp-table tbody tr:nth-child(even){background:var(--surf);}
+.comp-table td{padding:.44rem .65rem;vertical-align:top;border-bottom:1px solid var(--soft);line-height:1.55;}
+.comp-table td:first-child{font-weight:500;color:var(--navy);white-space:nowrap;}
+.comp-table .tick{color:var(--green);font-weight:600;}
+.comp-table .cross{color:var(--red);font-weight:600;}
+.comp-table .partial{color:var(--amber);font-weight:500;}
+
+/* Variable table */
+.var-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:.65rem 0 1.1rem;}
+.var-table thead th{background:var(--blue);color:#fff;font-weight:500;font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.48rem .7rem;text-align:left;}
+.var-table tbody tr:nth-child(odd){background:var(--bluebg);}
+.var-table tbody tr:nth-child(even){background:var(--surf);}
+.var-table td{padding:.44rem .7rem;vertical-align:top;border-bottom:1px solid var(--soft);line-height:1.55;}
+.var-table td:first-child{font-family:var(--mono);font-size:.72rem;font-weight:500;color:var(--blue);white-space:nowrap;}
+
+/* Simulator experiment box (orange) */
+.sim-box{display:grid;grid-template-columns:3px 1fr;border-radius:0 var(--rl) var(--rl) 0;overflow:hidden;margin:.6rem 0;}
+.sim-bar{background:var(--orange);}
+.sim-inner{background:var(--orangebg);border:1px solid var(--orangebd);border-left:none;padding:.75rem 1rem;}
+.sim-title{font-size:.75rem;font-weight:500;color:var(--orange);margin-bottom:.45rem;display:flex;align-items:center;gap:.35rem;}
+.sim-title::before{content:'⚙';font-size:.78rem;}
+.sim-inner p,.sim-inner li{font-size:.8rem;color:var(--ink2);line-height:1.62;}
+.sim-inner ul,.sim-inner ol{padding-left:1.1rem;margin:.25rem 0;}
+.sim-inner li{margin-bottom:.2rem;}
+
+/* Code block */
+.code-label{font-family:var(--mono);font-size:.58rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin:.9rem 0 .3rem;display:block;}
+.code-block{background:var(--surf);border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;font-family:var(--mono);font-size:.75rem;color:var(--ink2);line-height:1.7;overflow-x:auto;margin-bottom:.8rem;}
+.code-block .comment{color:var(--ink5);}
+.code-block .kw{color:var(--blue);}
+.code-block .fn{color:var(--purple);}
+.code-block .num{color:var(--green);}
+
+/* Quick ref table */
+.ref-table{width:100%;border-collapse:collapse;font-size:.8rem;margin:.75rem 0 1.25rem;}
+.ref-table thead th{background:var(--blue);color:#fff;font-weight:500;font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.48rem .7rem;text-align:left;}
+.ref-table tbody tr:nth-child(odd){background:var(--bluebg);}
+.ref-table tbody tr:nth-child(even){background:var(--surf);}
+.ref-table td{padding:.44rem .7rem;vertical-align:top;border-bottom:1px solid var(--soft);}
+.ref-table td:first-child{font-weight:500;color:var(--blue);white-space:nowrap;font-size:.72rem;font-family:var(--mono);}
+.ref-table .katex{font-size:.84rem;}
+
+/* Objectives */
+.objectives{background:var(--navybg);border:1px solid var(--navybd);border-left:4px solid var(--navy);border-radius:0 var(--rl) var(--rl) 0;padding:1rem 1.2rem;margin-top:2rem;}
+.objectives h3{font-family:var(--sans);font-size:.72rem;font-weight:500;color:var(--navy);letter-spacing:.05em;text-transform:uppercase;margin:0 0 .7rem;}
+.objectives ul{padding-left:1.15rem;}
+.objectives li{font-size:.78rem;color:var(--navy);line-height:1.65;margin-bottom:.28rem;}
+
+/* Three-col grid for part cards */
+.part-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:1rem 0;}
+.part-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--rl);padding:.85rem 1rem;border-top:3px solid var(--blue);}
+.part-card.orange{border-top-color:var(--orange);}
+.part-card.purple{border-top-color:var(--purple);}
+.part-card-num{font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink5);margin-bottom:.3rem;}
+.part-card-title{font-family:var(--serif);font-size:.92rem;font-weight:600;color:var(--ink);margin-bottom:.3rem;}
+.part-card-body{font-size:.77rem;color:var(--ink3);line-height:1.58;}
+
+@media(max-width:720px){
+  .page-body{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .content{padding:0;}
+  .wrap{padding:0 1rem 4rem;}
+  .part-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand"><b>Phys</b>Viz Notes</span>
+  <ul class="nav-links">
+    <li><a href="#s1">Motivation</a></li>
+    <li><a href="#s2">Force Law</a></li>
+    <li><a href="#s3">Derivation</a></li>
+    <li><a href="#s4">Lagrangian</a></li>
+    <li><a href="#s5">Cosmology</a></li>
+    <li><a href="#s6">Comparisons</a></li>
+    <li><a href="#s7">Simulations</a></li>
+    <li><a href="#s8">Predictions</a></li>
+    <li><a href="#s9">Reference</a></li>
+  </ul>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-kicker">Modified Gravity Theory</div>
+  <h1>Enhanced Modified Gravity Theory</h1>
+  <p class="hero-sub">A self-consistent, dark-matter-free theory of gravity that strengthens for massive, self-gravitating systems. Covers the full derivation from Newton to Lagrangian field theory, cosmological perturbation equations, and N-body simulation implementation.</p>
+  <div class="hero-chips">
+    <span class="chip">Modified Gravity</span>
+    <span class="chip">Dark Matter Alternative</span>
+    <span class="chip">Cosmological Perturbation Theory</span>
+    <span class="chip">N-Body Simulations</span>
+    <span class="chip">Scalar-Tensor Fields</span>
+    <span class="chip">Year 12 / First Year University</span>
+  </div>
+</div>
+
+<div class="page-body">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <span class="sidebar-mod">Overview</span>
+  <a href="#s0">The Big Idea</a>
+  <span class="sidebar-mod">Theory</span>
+  <a href="#s1">1 · Motivation</a>
+  <a href="#s2">2 · Force Law</a>
+  <a href="#s3">3 · Derivation</a>
+  <a href="#s4">4 · Lagrangian</a>
+  <a href="#s5">5 · Cosmology</a>
+  <span class="sidebar-mod">Applications</span>
+  <a href="#s6">6 · Comparisons</a>
+  <a href="#s7">7 · Simulations</a>
+  <a href="#s8">8 · Predictions</a>
+  <span class="sidebar-mod">Reference</span>
+  <a href="#s9">9 · Key Equations</a>
+  <a href="#s10">Learning Objectives</a>
+</aside>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ═══════════ SECTION 0: BIG IDEA ═══════════ -->
+<div class="sec" id="s0">
+  <div class="sec-header">
+    <div class="sec-num">Overview</div>
+    <div class="sec-title">The Big Idea</div>
+  </div>
+
+  <p class="body-text">Instead of adding invisible dark matter to explain why galaxies spin faster than they should, this theory asks: <em>what if gravity itself gets a little stronger for very massive objects?</em> The Enhanced Modified Gravity Theory (EMGT) refines that idea into three cooperating parts, each fixing a different scale problem.</p>
+
+  <div class="part-grid">
+    <div class="part-card">
+      <div class="part-card-num">Part 1</div>
+      <div class="part-card-title">Mass-Dependent Gravity</div>
+      <div class="part-card-body">Bigger self-gravitating objects (galaxies, clusters) produce proportionally stronger gravity. Controlled by the exponential saturation factor $1-e^{-M/M_0}$.</div>
+    </div>
+    <div class="part-card orange">
+      <div class="part-card-num">Part 2</div>
+      <div class="part-card-title">Scale-Dependent Gravity</div>
+      <div class="part-card-body">Gravity is only boosted over galaxy-sized distances. The Yukawa factor $e^{-r/r_0}$ ensures the Solar System is unaffected.</div>
+    </div>
+    <div class="part-card purple">
+      <div class="part-card-num">Part 3</div>
+      <div class="part-card-title">Time-Dependent Gravity</div>
+      <div class="part-card-body">Gravity was weaker in the early universe and grows over cosmic time via $\delta(t)$, preserving the Cosmic Microwave Background.</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <span class="formula-label">Full Optimised Theory — Effective Gravitational Constant</span>
+    $$G_\text{eff}(M,r,t) = G\Big[1 + \beta\!\left(1-e^{-M/M_0}\right)\Big]\Big[1+\gamma e^{-r/r_0}\Big]\Big[1+\delta(t)\Big]$$
+  </div>
+
+  <div class="insight">
+    <div class="insight-title">Why three separate factors?</div>
+    <ul>
+      <li>Factor 1 alone would boost gravity everywhere, including the Solar System — breaking precise measurements like Lunar Laser Ranging.</li>
+      <li>Factor 2 alone would not grow with galaxy mass — it couldn't explain why more massive galaxies need more enhancement.</li>
+      <li>Factor 3 alone would not know about distance — it would modify the Cosmic Microwave Background, which formed at high redshift.</li>
+      <li>Together, each factor applies in its own regime: mass scale, distance scale, and cosmic time scale — without interfering with the others.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 1: MOTIVATION ═══════════ -->
+<div class="sec" id="s1">
+  <div class="sec-header">
+    <div class="sec-num">Section 1</div>
+    <div class="sec-title">Motivation and Background</div>
+  </div>
+
+  <div class="sub" id="s1-1">
+    <h3>1.1 The Galactic Rotation Curve Problem</h3>
+    <p class="body-text">For a star orbiting at radius $r$ around an enclosed mass $M(r)$, Newton's second law gives circular orbital velocity by equating gravitational force to centripetal acceleration:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(1.1)</span>
+      $$\frac{GM(r)m}{r^2} = \frac{mv_\text{circ}^2}{r} \quad\Rightarrow\quad v_\text{circ} = \sqrt{\frac{GM(r)}{r}}$$
+    </div>
+
+    <p class="body-text">Equation (1.1) predicts that orbital speed falls as $r^{-1/2}$ beyond the visible disc — the same Keplerian fall-off as the planets around the Sun. But observations of hundreds of spiral galaxies (Rubin et al. 1980; Sofue &amp; Rubin 2001) show that $v_\text{circ}$ remains roughly <em>constant</em> out to tens of kiloparsecs from the galactic centre, far beyond the luminous disc.</p>
+
+    <div class="insight">
+      <div class="insight-title">The core discrepancy</div>
+      <ul>
+        <li><strong>Observed:</strong> $v_\text{circ} \approx \text{constant}$ (flat rotation curve) at large $r$.</li>
+        <li><strong>Predicted (Newtonian, visible mass only):</strong> $v_\text{circ} \propto r^{-1/2}$ (Keplerian fall-off).</li>
+        <li>The two curves diverge at roughly $r \sim 5$ kpc for a typical spiral galaxy.</li>
+        <li>The discrepancy requires either <strong>additional unseen mass</strong> (dark matter) or a <strong>modification to gravity</strong> itself.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub" id="s1-2">
+    <h3>1.2 The Two Standard Responses</h3>
+    <p class="body-text"><strong>Cold Dark Matter (CDM):</strong> Add gravitationally interacting but electromagnetically invisible particles forming an extended halo around each galaxy. This dominates the standard Lambda-CDM cosmology and explains many observations, but requires a new particle species with no confirmed laboratory detection to date.</p>
+
+    <p class="body-text"><strong>Modified Newtonian Dynamics (MOND, Milgrom 1983):</strong> Replace the inertia law for accelerations below $a_0 \approx 1.2 \times 10^{-10}\ \text{m s}^{-2}$. MOND fits individual galaxy rotation curves remarkably well, naturally producing the Baryonic Tully-Fisher relation, but lacks a complete relativistic extension and struggles with galaxy cluster dynamics.</p>
+
+    <p class="body-text"><strong>EMGT (this theory):</strong> Instead of modifying acceleration, it modifies the strength of gravity as a function of the <em>source mass</em> $M$, recovering Newtonian results at small $M$ and saturating to an enhanced value at galactic and cosmological scales. It is closer in spirit to scalar-tensor theories (Brans-Dicke, $f(R)$) but with a physically transparent, mass-keyed enhancement factor.</p>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 2: FORCE LAW ═══════════ -->
+<div class="sec" id="s2">
+  <div class="sec-header">
+    <div class="sec-num">Section 2</div>
+    <div class="sec-title">The Modified Force Law</div>
+  </div>
+
+  <div class="sub" id="s2-1">
+    <h3>2.1 Statement of the Full Law</h3>
+
+    <div class="formula-block">
+      <span class="formula-label">EMGT Gravitational Force</span>
+      <span class="eq-num">(2.1)</span>
+      $$F = \frac{G_\text{eff}(M,r,t)\,Mm}{r^2}$$
+    </div>
+
+    <div class="formula-block">
+      <span class="formula-label">Effective Gravitational Constant</span>
+      <span class="eq-num">(2.2)</span>
+      $$G_\text{eff}(M,r,t) = G\underbrace{\Big[1+\beta(1-e^{-M/M_0})\Big]}_{\text{mass term}}\underbrace{\Big[1+\gamma e^{-r/r_0}\Big]}_{\text{scale term}}\underbrace{\Big[1+\delta(t)\Big]}_{\text{time term}}$$
+    </div>
+  </div>
+
+  <div class="sub" id="s2-2">
+    <h3>2.2 Variable Dictionary</h3>
+
+    <table class="var-table">
+      <thead><tr><th>Symbol</th><th>Name</th><th>Typical Value</th><th>Physical Role</th></tr></thead>
+      <tbody>
+        <tr><td>$G$</td><td>Newton's constant</td><td>$6.674\times10^{-11}\ \text{N m}^2\,\text{kg}^{-2}$</td><td>Baseline strength of gravity</td></tr>
+        <tr><td>$G_\text{eff}$</td><td>Effective gravity</td><td>$\geq G$</td><td>Enhanced coupling replacing dark matter</td></tr>
+        <tr><td>$M$</td><td>Source mass</td><td>$10^{10}$–$10^{15}\ M_\odot$</td><td>Controls the mass-based enhancement</td></tr>
+        <tr><td>$M_0$</td><td>Characteristic mass</td><td>$\sim 10^{11}\ M_\odot$ (galactic scale)</td><td>Mass threshold where enhancement activates</td></tr>
+        <tr><td>$\beta$</td><td>Mass coupling</td><td>$5$–$10$</td><td>Maximum fractional increase in $G$ from mass</td></tr>
+        <tr><td>$r$</td><td>Separation</td><td>—</td><td>Distance between source and test mass</td></tr>
+        <tr><td>$r_0$</td><td>Scale length</td><td>$10$–$100\ \text{kpc}$</td><td>Distance at which scale enhancement peaks</td></tr>
+        <tr><td>$\gamma$</td><td>Scale coupling</td><td>$\sim 1$</td><td>Strength of distance-based correction</td></tr>
+        <tr><td>$\delta(t)$</td><td>Time correction</td><td>$0$ (early) to $0.1$–$0.3$ (today)</td><td>Ensures early universe is unchanged</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub" id="s2-3">
+    <h3>2.3 Scale Behaviour of the Mass Term</h3>
+    <p class="body-text">The mass term $[1+\beta(1-e^{-M/M_0})]$ has three distinct regimes. Understanding each is essential for seeing why EMGT passes Solar System tests while reproducing galactic observations.</p>
+
+    <table class="scale-table">
+      <thead><tr><th>Regime</th><th>Condition</th><th>Approximation</th><th>Enhancement</th><th>Physical example</th></tr></thead>
+      <tbody>
+        <tr><td>Small mass</td><td>$M \ll M_0$</td><td>$e^{-M/M_0}\approx 1-M/M_0$, so correction $\approx \beta M/M_0$</td><td>$\approx 1$ (negligible)</td><td>Sun ($M/M_0\sim 10^{-11}$): totally undetectable</td></tr>
+        <tr><td>Transition</td><td>$M \sim M_0$</td><td>$e^{-M/M_0}\approx 0.37$, so factor $\approx 1+0.63\beta$</td><td>$\approx 6$ for $\beta=8$</td><td>Milky Way disc: rotation curve flattens</td></tr>
+        <tr><td>Saturation</td><td>$M \gg M_0$</td><td>$e^{-M/M_0}\to 0$, so factor $\to 1+\beta$</td><td>$\approx 9$ for $\beta=8$</td><td>Galaxy clusters: binding energy and lensing</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip"><strong>Why the exponential saturates:</strong> The function $1-e^{-x}$ rises from 0 at $x=0$ and asymptotes to 1 as $x\to\infty$. This gives a maximum enhancement of exactly $(1+\beta)$ regardless of how large $M$ becomes — preventing unbounded amplification of gravity at cosmological scales.</div>
+
+    <div class="note-box"><strong>Scale term behaviour:</strong> At small $r \ll r_0$, $e^{-r/r_0}\approx 1$ so $G_\text{eff}\approx G(1+\gamma)$ — gravity is locally boosted. At large $r \gg r_0$, $e^{-r/r_0}\to 0$, so the scale enhancement disappears. This is a Yukawa-type suppression: the scale correction is short-range on cosmic scales but long-range on galactic scales because $r_0\sim 10$–$100\ \text{kpc}$ is chosen to match galaxy sizes.</div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 3: DERIVATION ═══════════ -->
+<div class="sec" id="s3">
+  <div class="sec-header">
+    <div class="sec-num">Section 3</div>
+    <div class="sec-title">Derivation of the Modified Force</div>
+  </div>
+
+  <div class="sub" id="s3-1">
+    <h3>3.1 Starting from Newton</h3>
+    <p class="body-text">Newton's law assumes $G$ is a universal constant. EMGT replaces $G$ with $G_\text{eff}(M,r,t)$ — an effective constant that depends on the physical environment. The full derivation builds this in five steps.</p>
+  </div>
+
+  <div class="sub" id="s3-2">
+    <h3>3.2 Step-by-Step Derivation</h3>
+
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">Deriving the EMGT Force Law from the Modified Potential</div>
+        <ol>
+          <li><strong>Start from Newton's Law.</strong> Standard gravitational force: $F = GMm/r^2$. Newton assumes $G$ is constant and gravity depends only on separation $r$. But galaxies rotate too fast for this, requiring either dark matter or a modification to $G$.</li>
+          <li><strong>Postulate a mass-dependent potential.</strong> Write the modified gravitational potential as:
+            <div class="formula-block">
+              <span class="eq-num">(3.1)</span>
+              $$\Phi(r) = -\frac{GM}{r}\Big[1+\beta\!\left(1-e^{-M/M_0}\right)\Big]$$
+            </div>
+            The term in brackets is constant with respect to $r$ (it depends only on $M$). This is the crucial point for the derivation.
+          </li>
+          <li><strong>Differentiate to get the force.</strong> The radial force is $F = -m\,\mathrm{d}\Phi/\mathrm{d}r$. Since $[1+\beta(1-e^{-M/M_0})]$ does not depend on $r$, it factors out:
+            <div class="formula-block">
+              $$F = -m\frac{\mathrm{d}}{\mathrm{d}r}\!\left[-\frac{GM}{r}\right]\cdot\Big[1+\beta(1-e^{-M/M_0})\Big]$$
+            </div>
+            <div class="formula-block">
+              <span class="eq-num">(3.2)</span>
+              $$F = -\frac{GMm}{r^2}\Big[1+\beta\!\left(1-e^{-M/M_0}\right)\Big]$$
+            </div>
+            This recovers the force law (2.1) for the mass term. The negative sign confirms the force is attractive (toward the source).
+          </li>
+          <li><strong>Add the scale correction.</strong> Multiply by the Yukawa factor to get the scale-dependent version. The full potential including the Yukawa term is:
+            <div class="formula-block">
+              <span class="eq-num">(3.3)</span>
+              $$\Phi(r) = -\frac{G_M M}{r}\Big[1 + \gamma e^{-r/r_0}\Big]$$
+            </div>
+            where $G_M = G[1+\beta(1-e^{-M/M_0})]$. Differentiating with respect to $r$ now gives two terms — one from $1/r$ and one from $e^{-r/r_0}/r$:
+            <div class="formula-block">
+              <span class="eq-num">(3.4)</span>
+              $$F = -\frac{G_M Mm}{r^2}\left[1 + \gamma e^{-r/r_0}\!\left(1+\frac{r}{r_0}\right)\right]$$
+            </div>
+            The extra $(1+r/r_0)$ factor arises from the product rule applied to $e^{-r/r_0}/r$. In the limit $r \ll r_0$ this is approximately $(1+\gamma e^{-r/r_0})$, recovering the simpler form.
+          </li>
+          <li><strong>Apply the time correction.</strong> Multiply the whole coupling by $[1+\delta(t)]$. Since $\delta(t)$ depends only on cosmic time, not on $r$ or $M$, this is a global rescaling of $G_\text{eff}$ at each epoch. The final force law is equation (2.1).</li>
+        </ol>
+        <div class="trap">The enhancement factor $[1+\beta(1-e^{-M/M_0})]$ must NOT be differentiated when computing $F = -\mathrm{d}\Phi/\mathrm{d}r$, because $M$ in this expression is the total enclosed mass of the source — it is a fixed property of the source object, not a function of the test-mass position $r$. Only the $1/r$ and Yukawa $e^{-r/r_0}$ terms vary with $r$.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" id="s3-3">
+    <h3>3.3 Modified Circular Velocity</h3>
+    <p class="body-text">Setting $F = mv^2/r$ (centripetal condition) with the EMGT force gives the rotation curve prediction:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(3.5)</span>
+      $$v_\text{circ}(r) = \sqrt{\frac{G_\text{eff}(M,r,t)\,M(r)}{r}}$$
+    </div>
+
+    <p class="body-text">For the Milky Way at large $r$, most of the disc mass is interior to the test star, so $M(r)$ grows slowly. With $\beta \approx 8$ and $M \sim M_0$, the enhancement factor is $\approx 6$, so the effective gravitational pull on outer disc stars is six times stronger than Newtonian. This substantially flattens the predicted rotation curve without requiring a dark matter halo.</p>
+
+    <div class="tip"><strong>Choosing $\beta$:</strong> $\beta \approx 8$ gives an enhancement of $\approx 6$ at $M\sim M_0$ and $\approx 9$ at $M\gg M_0$. Fitting to individual galaxies constrains both $\beta$ and $M_0$; the SPARC database of 175 galaxy rotation curves is the standard benchmark dataset for this fit.</div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 4: LAGRANGIAN ═══════════ -->
+<div class="sec" id="s4">
+  <div class="sec-header">
+    <div class="sec-num">Section 4</div>
+    <div class="sec-title">Lagrangian and Field Theory Formulation</div>
+  </div>
+
+  <div class="sub" id="s4-1">
+    <h3>4.1 Why We Need a Field Theory</h3>
+    <p class="body-text">The force law in Section 2 treats $M$, $r$, and $t$ as explicit inputs to $G_\text{eff}$. But in General Relativity (GR), gravity is a property of spacetime curvature — $G$ cannot directly depend on non-local quantities like the total enclosed mass $M$ of a distant object. To make EMGT consistent with covariance and energy conservation, we must replace $M$, $r$-dependence, and $t$-dependence by <em>local fields</em> that carry the same information covariantly.</p>
+
+    <p class="body-text">This is the standard approach used in MOND (TeVeS), MOG/STVG, and $f(R)$ gravity. EMGT becomes a <strong>triple-field modified gravity model</strong>:</p>
+
+    <table class="var-table">
+      <thead><tr><th>Field</th><th>Symbol</th><th>Controls</th><th>Field type</th></tr></thead>
+      <tbody>
+        <tr><td>Mass field</td><td>$\phi$</td><td>Mass-dependent enhancement ($\sim M/M_0$ in the non-relativistic limit)</td><td>Scalar</td></tr>
+        <tr><td>Scale field</td><td>$A_\mu$</td><td>Scale-dependent Yukawa correction ($e^{-r/r_0}$ profile)</td><td>Vector (Proca)</td></tr>
+        <tr><td>Time field</td><td>$\chi$</td><td>Time-dependent growth ($\delta(t)$ today $>$ $\delta$ early)</td><td>Scalar (slow-roll)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub" id="s4-2">
+    <h3>4.2 Particle Lagrangian</h3>
+    <p class="body-text">At the non-relativistic level, the Lagrangian for a test particle of mass $m$ in the EMGT potential is simply kinetic minus potential energy:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.1)</span>
+      $$\mathcal{L} = \tfrac{1}{2}mv^2 - m\Phi(r) = \tfrac{1}{2}mv^2 + \frac{G_\text{eff}(M,r,t)\,Mm}{r}$$
+    </div>
+
+    <p class="body-text">The Euler-Lagrange equation $\frac{\mathrm{d}}{\mathrm{d}t}\frac{\partial\mathcal{L}}{\partial v} - \frac{\partial\mathcal{L}}{\partial r} = 0$ gives $m\ddot{r} = -m\,\mathrm{d}\Phi/\mathrm{d}r$, which is exactly the EMGT force law (3.2). The Lagrangian formulation guarantees the force derives from a variational principle and therefore has well-defined energy conservation.</p>
+  </div>
+
+  <div class="sub" id="s4-3">
+    <h3>4.3 Relativistic Action</h3>
+    <p class="body-text">The standard Einstein-Hilbert action of GR is $S_\text{GR} = \int\sqrt{-g}\left[\frac{R}{16\pi G} + \mathcal{L}_m\right]\mathrm{d}^4x$ where $R$ is the Ricci scalar (spacetime curvature), $g$ is the metric determinant, and $\mathcal{L}_m$ is the matter Lagrangian density. EMGT modifies this to:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.2)</span>
+      $$S_\text{EMGT} = \int\sqrt{-g}\left[\frac{f(\phi)\,R}{16\pi G} + \mathcal{L}_m + \mathcal{L}_\phi + \mathcal{L}_A + \mathcal{L}_\chi\right]\mathrm{d}^4x$$
+    </div>
+
+    <p class="body-text">The three field Lagrangian densities are:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.3)</span>
+      $$\mathcal{L}_\phi = -\tfrac{1}{2}\,\omega(\phi)\,g^{\mu\nu}\partial_\mu\phi\,\partial_\nu\phi - V(\phi), \qquad V(\phi) = V_0\,e^{-\phi}$$
+    </div>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.4)</span>
+      $$\mathcal{L}_A = -\tfrac{1}{4}B_{\mu\nu}B^{\mu\nu} + \tfrac{1}{2}\mu^2 A_\mu A^\mu + \gamma A_\mu J^\mu, \qquad B_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu$$
+    </div>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.5)</span>
+      $$\mathcal{L}_\chi = -\tfrac{1}{2}g^{\mu\nu}\partial_\mu\chi\,\partial_\nu\chi - U(\chi), \qquad U(\chi) = U_0\chi^n$$
+    </div>
+
+    <p class="body-text">The non-minimal coupling function is chosen to reproduce the EMGT mass enhancement:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.6)</span>
+      $$f(\phi) = 1 + \beta(1 - e^{-\phi}), \qquad \phi \sim M/M_0 \text{ in the non-relativistic limit}$$
+    </div>
+  </div>
+
+  <div class="sub" id="s4-4">
+    <h3>4.4 Modified Einstein Equations</h3>
+    <p class="body-text">Varying the action (4.2) with respect to the metric $g_{\mu\nu}$ yields a modified Einstein equation:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(4.7)</span>
+      $$G_{\mu\nu} = \frac{8\pi G}{f(\phi)}\,T_{\mu\nu} + \text{(derivative terms in }\phi,A,\chi\text{)}$$
+    </div>
+
+    <p class="body-text">The effective gravitational coupling is $G_\text{eff} = G/f(\phi)$. When $\phi$ is large (massive source), $f(\phi)\approx 1+\beta$ so $G_\text{eff} = G/(1+\beta) < G$ — which appears to <em>weaken</em> gravity at first. However, the field equations also modify the source term $T_{\mu\nu}$ and the curvature response, and the net effect in the Newtonian limit is the enhancement shown in Section 2. The Proca field $A_\mu$ contributes the Yukawa profile via its massive propagator; the $\chi$ field contributes the time variation via its slow-roll evolution.</p>
+
+    <div class="insight">
+      <div class="insight-title">Why the kinetic term in $\mathcal{L}_\phi$ matters</div>
+      <p>The term $-\frac{1}{2}\omega(\phi)(\partial\phi)^2$ must have $\omega(\phi)>0$ to avoid <strong>ghost instabilities</strong> — negative kinetic energy modes that would cause the vacuum to be unstable and the theory to break down. This is the same constraint that rules out certain $f(R)$ gravity models. In EMGT, choosing $\omega(\phi) = 1$ is the simplest healthy choice.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 5: COSMOLOGY ═══════════ -->
+<div class="sec" id="s5">
+  <div class="sec-header">
+    <div class="sec-num">Section 5</div>
+    <div class="sec-title">Cosmological Perturbation Theory</div>
+  </div>
+
+  <div class="sub" id="s5-1">
+    <h3>5.1 The Background Universe (FLRW)</h3>
+    <p class="body-text">On the largest scales the Universe is isotropic and homogeneous, described by the FLRW metric. Small perturbations about the flat FLRW background are described in <strong>Newtonian gauge</strong> by two scalar potentials $\Psi$ (time-time perturbation) and $\Phi$ (space-space perturbation):</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(5.1)</span>
+      $$\mathrm{d}s^2 = -(1+2\Psi)\,\mathrm{d}t^2 + a^2(t)(1-2\Phi)\,\mathrm{d}\vec{x}^2$$
+    </div>
+
+    <p class="body-text">Here $a(t)$ is the cosmic scale factor. In standard GR without anisotropic stress, $\Psi = \Phi$. EMGT introduces a small difference between $\Psi$ and $\Phi$ through the scalar field gradient terms, but this is a second-order correction. The Hubble parameter is $H = \dot{a}/a$.</p>
+  </div>
+
+  <div class="sub" id="s5-2">
+    <h3>5.2 Modified Poisson Equation</h3>
+    <p class="body-text">In standard cosmology, the Poisson equation linking the gravitational potential to matter overdensity $\delta = \delta\rho/\bar\rho$ is $\nabla^2\Phi = 4\pi G a^2 \bar\rho\,\delta$. In EMGT, the effective coupling is enhanced. The background scalar field value is $\bar\phi \sim \bar\rho/\rho_0$ (where $\rho_0$ corresponds to $M_0$). The modified Poisson equation becomes:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(5.2)</span>
+      $$\nabla^2\Phi = 4\pi G a^2 \delta\rho\Big[1+\beta(1-e^{-\bar\phi})\Big]$$
+    </div>
+
+    <p class="body-text">In Fourier space ($k$ is the comoving wavenumber), the scale-dependent Yukawa correction replaces $e^{-r/r_0}$ with $e^{-kr_0}$ (small $k$ = large scales, Yukawa suppressed at small $k$ = large scales). The full modified Poisson equation in Fourier space is:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(5.3)</span>
+      $$k^2\Phi = 4\pi G a^2 \bar\rho\,\delta\Big[1+\beta(1-e^{-\bar\phi})+\gamma e^{-kr_0}+\delta(\bar\chi)\Big]$$
+    </div>
+  </div>
+
+  <div class="sub" id="s5-3">
+    <h3>5.3 Growth Equation for Structure Formation</h3>
+    <p class="body-text">The fractional matter overdensity $\delta$ satisfies a second-order ODE in cosmic time. In standard Lambda-CDM: $\ddot\delta + 2H\dot\delta = 4\pi G\bar\rho\,\delta$. With EMGT enhancement:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(5.4)</span>
+      $$\ddot\delta + 2H\dot\delta = 4\pi G\bar\rho\Big[1+\beta\!\left(1-e^{-\bar\phi}\right)\Big]\delta$$
+    </div>
+
+    <p class="body-text">The right-hand side is the gravitational source term for density fluctuations. The EMGT enhancement makes this term larger, driving <em>faster</em> growth of structure. Galaxies, clusters, and filaments form earlier and with higher overdensity than in a baryon-only Newtonian universe, partially compensating for the absence of dark matter in the matter power spectrum.</p>
+
+    <div class="sub" id="s5-4">
+      <h3>5.4 Field Perturbation Equations</h3>
+      <p class="body-text">Each field also has a perturbation equation governing its own fluctuations $\delta\phi$, $\delta A_i$, $\delta\chi$:</p>
+
+      <div class="formula-block">
+        <span class="formula-label">Scalar field $\phi$ perturbations</span>
+        <span class="eq-num">(5.5)</span>
+        $$\ddot{\delta\phi} + 3H\dot{\delta\phi} + \left(\frac{k^2}{a^2}+V''(\phi)\right)\delta\phi = 4\dot\phi\dot\Psi - 2V'(\phi)\Psi$$
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Vector field $A_\mu$ perturbations (Proca)</span>
+        <span class="eq-num">(5.6)</span>
+        $$\ddot A_i + H\dot A_i + \left(\frac{k^2}{a^2}+\mu^2\right)A_i = 0$$
+      </div>
+
+      <div class="formula-block">
+        <span class="formula-label">Time scalar $\chi$ perturbations</span>
+        <span class="eq-num">(5.7)</span>
+        $$\ddot{\delta\chi} + 3H\dot{\delta\chi} + U''(\chi)\,\delta\chi = 4\dot\chi\dot\Psi - 2U'(\chi)\Psi$$
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-title">What these equations predict — observational consequences</div>
+      <ul>
+        <li><strong>Matter power spectrum $P(k)$:</strong> Enhanced growth boosts $P(k)$ on scales $k>0.1\,h\,\text{Mpc}^{-1}$ compared to baryon-only gravity. Galaxy surveys (DESI, Euclid) measure this directly.</li>
+        <li><strong>Growth rate $f\sigma_8$:</strong> EMGT predicts a different redshift evolution of $f\sigma_8$ from Lambda-CDM. Redshift-space distortions (RSD) in spectroscopic surveys constrain this.</li>
+        <li><strong>CMB power spectrum:</strong> Recombination occurs at $z\sim1100$ when $\bar\phi\ll1$ (low density). The EMGT enhancement is negligible then — CMB is unchanged, consistent with Planck data.</li>
+        <li><strong>Baryon Acoustic Oscillations:</strong> The BAO sound horizon is set before enhancement activates; the BAO scale should be identical to Lambda-CDM, but peak amplitudes in $P(k)$ may differ.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 6: COMPARISONS ═══════════ -->
+<div class="sec" id="s6">
+  <div class="sec-header">
+    <div class="sec-num">Section 6</div>
+    <div class="sec-title">Theory Comparisons</div>
+  </div>
+
+  <div class="sub" id="s6-1">
+    <h3>6.1 Side-by-Side Comparison</h3>
+
+    <table class="comp-table">
+      <thead><tr><th>Theory</th><th>How it modifies gravity</th><th>Dark matter?</th><th>Rotation curves</th><th>CMB</th><th>Key problem</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Newtonian</td>
+          <td>$F=GMm/r^2$, $G$ constant</td>
+          <td class="cross">Required</td>
+          <td class="cross">Fails</td>
+          <td class="tick">OK</td>
+          <td>Flat rotation curves unexplained without dark matter halo</td>
+        </tr>
+        <tr>
+          <td>MOND</td>
+          <td>Modifies inertia below $a_0$</td>
+          <td class="partial">Partly avoids</td>
+          <td class="tick">Excellent</td>
+          <td class="cross">Struggles</td>
+          <td>No complete relativistic theory; cluster-scale failures</td>
+        </tr>
+        <tr>
+          <td>GR + $\Lambda$CDM</td>
+          <td>$G_{\mu\nu}=8\pi G T_{\mu\nu}$, DM in $T_{\mu\nu}$</td>
+          <td class="cross">Yes (CDM)</td>
+          <td class="tick">With halo</td>
+          <td class="tick">Excellent</td>
+          <td>No confirmed dark matter particle after 40 years of searching</td>
+        </tr>
+        <tr>
+          <td>$f(R)$ gravity</td>
+          <td>Adds $f(R)$ terms to action</td>
+          <td class="partial">Partly avoids</td>
+          <td class="partial">Partial</td>
+          <td class="partial">Partial</td>
+          <td>Chameleon screening needed; tight Solar System constraints</td>
+        </tr>
+        <tr>
+          <td><strong>EMGT (this theory)</strong></td>
+          <td>$G_\text{eff}(M,r,t)$ via 3 fields</td>
+          <td class="tick">Not required</td>
+          <td class="tick">Reproduces</td>
+          <td class="tick">Unchanged</td>
+          <td>$\beta$, $M_0$, $r_0$ free parameters; Bullet Cluster challenge</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub" id="s6-2">
+    <h3>6.2 EMGT vs. MOND</h3>
+    <p class="body-text">MOND modifies the <em>inertia</em> of a particle for accelerations below $a_0 \approx 1.2\times10^{-10}\ \text{m s}^{-2}$ via an interpolating function $\mu(a/a_0)$. In the deep-MOND limit it naturally gives the Baryonic Tully-Fisher relation $v_\text{flat}^4 = GMa_0$, which is observed to hold tightly across galaxy types. EMGT instead modifies the <em>source coupling</em> as a function of mass, not acceleration. The theories make distinct predictions in three testable regimes:</p>
+
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">EMGT vs. MOND: three distinguishing tests</div>
+        <ol>
+          <li><strong>Galaxy clusters.</strong> MOND still requires dark matter in clusters (the thermal velocity dispersion of hot gas exceeds MOND predictions). EMGT's saturation limit gives enhanced binding energy $(1+\beta)G$ at cluster masses — reducing (but not eliminating) the need for additional mass.</li>
+          <li><strong>Ultra-faint dwarf galaxies.</strong> MOND predicts large acceleration-enhancement effects in low-surface-brightness dwarfs (low $a$, deep MOND regime). EMGT at dwarf masses $M \ll M_0$ predicts near-Newtonian behaviour — a qualitatively different signature testable with Local Group dwarfs.</li>
+          <li><strong>Gravitational lensing.</strong> EMGT lensing is enhanced by the same factor $(1+\beta(1-e^{-M/M_0}))$ as the Newtonian force. TeVeS (the relativistic MOND extension) predicts additional vector-field contributions to lensing. Future strong-lensing surveys (Euclid, Roman) can distinguish them.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub" id="s6-3">
+    <h3>6.3 The Bullet Cluster Challenge</h3>
+    <p class="body-text">The Bullet Cluster (1E 0657-558) is often cited as the strongest evidence for dark matter. During the cluster-cluster merger, the hot X-ray gas (most of the baryonic mass) was slowed by electromagnetic interactions, while the gravitational lensing mass continued at the original velocity. The lensing mass is spatially offset from the gas — which Lambda-CDM explains naturally (the dark matter halos passed through each other).</p>
+
+    <div class="note-box"><strong>The EMGT challenge:</strong> EMGT must explain the Bullet Cluster mass offset without invoking dark matter. This requires that the enhanced gravity of the stellar components (which are collisionless and pass through each other like the Lambda-CDM halos) produces the observed lensing mass distribution. Whether $G_\text{eff}(M_\text{stars}, r, t)$ is large enough to reproduce the full lensing signal with stellar mass alone is an open quantitative question — and the single biggest observational challenge for EMGT.</div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 7: SIMULATIONS ═══════════ -->
+<div class="sec" id="s7">
+  <div class="sec-header">
+    <div class="sec-num">Section 7</div>
+    <div class="sec-title">Implementation in Astrophysical Simulations</div>
+  </div>
+
+  <div class="sub" id="s7-1">
+    <h3>7.1 Standard N-Body Framework</h3>
+    <p class="body-text">N-body codes (Gadget-2, Arepo, Ramses) represent galaxies and large-scale structure as $N$ particles, each carrying a mass $m_i$ and position $\vec{r}_i$. The Newtonian acceleration of particle $i$ from all other particles $j$ is:</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(7.1)</span>
+      $$\vec{a}_i^\text{Newton} = -G\sum_{j\neq i} m_j\frac{\vec{r}_{ij}}{r_{ij}^3}, \qquad \vec{r}_{ij} = \vec{r}_i - \vec{r}_j$$
+    </div>
+
+    <p class="body-text">In practice, a softening length $\varepsilon$ is added to avoid divergences at small separations: $r_{ij} \to \sqrt{r_{ij}^2+\varepsilon^2}$. The sum is computed by direct summation $O(N^2)$ or via the Barnes-Hut tree algorithm $O(N\log N)$.</p>
+  </div>
+
+  <div class="sub" id="s7-2">
+    <h3>7.2 EMGT Modified Acceleration</h3>
+    <p class="body-text">Replacing the Newtonian acceleration with EMGT requires a single multiplicative change: each pairwise force is multiplied by the enhancement factor evaluated for the <em>source</em> particle $j$ (not the accelerated particle $i$):</p>
+
+    <div class="formula-block">
+      <span class="eq-num">(7.2)</span>
+      $$\vec{a}_i^\text{EMGT} = -G\sum_{j\neq i} m_j\frac{\vec{r}_{ij}}{r_{ij}^3}\cdot\underbrace{\Big[1+\beta(1-e^{-m_j/M_0})\Big]\Big[1+\gamma e^{-r_{ij}/r_0}\Big]\Big[1+\delta(t)\Big]}_{G_\text{eff}\text{ factors}}$$
+    </div>
+
+    <div class="tip"><strong>Implementation efficiency:</strong> The mass factor $[1+\beta(1-e^{-m_j/M_0})]$ depends only on the source particle mass $m_j$, which is constant throughout the simulation. It can be pre-computed once at initialisation and stored as a per-particle constant <code>enhance[j]</code> with zero runtime overhead. The scale and time factors must be recomputed each timestep but are cheap (one exponential per particle pair, one multiplication).</div>
+  </div>
+
+  <div class="sub" id="s7-3">
+    <h3>7.3 Pseudocode</h3>
+    <span class="code-label">Python pseudocode — EMGT N-body force kernel</span>
+    <div class="code-block">
+<span class="comment"># ─── Initialisation (run once) ─────────────────────────────</span>
+<span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(N):
+    enhance[j] = <span class="num">1.0</span> + beta * (<span class="num">1.0</span> - <span class="fn">exp</span>(-m[j] / M_0))
+
+<span class="comment"># ─── Force loop (each timestep) ────────────────────────────</span>
+dt_factor = <span class="num">1.0</span> + delta_t          <span class="comment"># recompute each step</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(N):
+    a[i] = vec3(<span class="num">0</span>, <span class="num">0</span>, <span class="num">0</span>)
+    <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(N):
+        <span class="kw">if</span> j == i: <span class="kw">continue</span>
+        r_ij  = pos[i] - pos[j]
+        dist2 = <span class="fn">dot</span>(r_ij, r_ij) + eps*eps    <span class="comment"># softening</span>
+        dist  = <span class="fn">sqrt</span>(dist2)
+        scale_factor = <span class="num">1.0</span> + gamma * <span class="fn">exp</span>(-dist / r_0)
+        G_eff = G * enhance[j] * scale_factor * dt_factor
+        a[i] -= G_eff * m[j] * r_ij / (dist2 * dist)
+
+<span class="comment"># ─── Leap-frog integration ──────────────────────────────────</span>
+v += a * dt                 <span class="comment"># half-step velocity</span>
+pos += v * dt               <span class="comment"># full-step position</span>
+    </div>
+  </div>
+
+  <div class="sub" id="s7-4">
+    <h3>7.4 Simulation Predictions</h3>
+
+    <div class="sim-box">
+      <div class="sim-bar"></div>
+      <div class="sim-inner">
+        <div class="sim-title">What the simulation predicts with EMGT enabled</div>
+        <ul>
+          <li><strong>Galaxy rotation curves:</strong> Flat or slowly-rising $v_\text{circ}(r)$ without any dark matter halo — matching the SPARC observational database with appropriate $\beta$ and $M_0$.</li>
+          <li><strong>Baryonic Tully-Fisher:</strong> The empirical $v_\text{flat}^4 \propto M_\text{bar}$ relation should emerge naturally from the EMGT force law if $r_\text{flat} \propto M^{1/2}$ as observed for exponential disc galaxies.</li>
+          <li><strong>Galaxy clusters:</strong> Velocity dispersions and lensing mass enhanced by $(1+\beta)$ at cluster mass scales, reducing the required additional mass component.</li>
+          <li><strong>Large-scale structure:</strong> Matter power spectrum $P(k)$ boosted relative to baryon-only gravity by the growth enhancement factor — structure forms earlier and is more concentrated.</li>
+          <li><strong>No dark matter halos:</strong> Galaxies remain bound and form spiral arms correctly, but no extended dark matter substructure appears in the particle distribution.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 8: PREDICTIONS ═══════════ -->
+<div class="sec" id="s8">
+  <div class="sec-header">
+    <div class="sec-num">Section 8</div>
+    <div class="sec-title">Observational Predictions and Tests</div>
+  </div>
+
+  <div class="sub">
+    <h3>8.1 Galaxy Rotation Curves (Primary Prediction)</h3>
+    <p class="body-text">With parameters $\beta\approx8$, $M_0\sim10^{11}\,M_\odot$, the modified circular velocity:</p>
+    <div class="formula-block">
+      <span class="eq-num">(8.1)</span>
+      $$v_\text{circ}^\text{EMGT}(r) = v_\text{circ}^\text{Newton}(r)\cdot\sqrt{1+\beta\!\left(1-e^{-M_\text{enc}(r)/M_0}\right)}$$
+    </div>
+    <p class="body-text">predicts flat rotation curves for Milky Way-mass spirals and a systematic $v_\text{flat}$–$M_\text{bar}$ correlation matching the Baryonic Tully-Fisher Relation. The SPARC database (175 galaxies, Lelli et al. 2016) and the Milky Way rotation curve (Eilers et al. 2019) are the primary fitting targets.</p>
+  </div>
+
+  <div class="sub">
+    <h3>8.2 Gravitational Lensing</h3>
+    <p class="body-text">The EMGT lensing potential is enhanced by the same factor as the Newtonian force. For a cluster of baryonic mass $M$, the Einstein ring radius is:</p>
+    <div class="formula-block">
+      <span class="eq-num">(8.2)</span>
+      $$\theta_E = \sqrt{\frac{4G_\text{eff}M}{c^2}\cdot\frac{D_{LS}}{D_L D_S}}$$
+    </div>
+    <p class="body-text">The EMGT prediction for $\theta_E$ is systematically larger than the Newtonian prediction for the same baryonic mass. Strong lensing surveys (Hubble Frontier Fields, Euclid) directly constrain the ratio of lensing mass to baryonic mass, testing whether EMGT's enhancement is sufficient without dark matter.</p>
+  </div>
+
+  <div class="sub">
+    <h3>8.3 Summary of Tests</h3>
+    <table class="scale-table">
+      <thead><tr><th>Observation</th><th>EMGT prediction</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>Spiral galaxy rotation curves</td><td>Flat, no halo needed for $\beta\approx8$, $M_0\sim10^{11}M_\odot$</td><td>Testable vs. SPARC</td></tr>
+        <tr><td>Baryonic Tully-Fisher</td><td>$v_\text{flat}^4 \propto M_\text{bar}$ emerges if $r_\text{flat}\propto M^{1/2}$</td><td>Qualitatively predicted</td></tr>
+        <tr><td>Galaxy cluster lensing</td><td>$G_\text{eff}=(1+\beta)G$ at cluster scale — enhanced lensing</td><td>Depends on $\beta$</td></tr>
+        <tr><td>Bullet Cluster offset</td><td>Must reproduce stellar mass $\neq$ gas mass lensing offset</td><td>Open challenge</td></tr>
+        <tr><td>CMB power spectrum</td><td>Unchanged (enhancement negligible at $z\sim1100$)</td><td>Consistent with Planck</td></tr>
+        <tr><td>Growth rate $f\sigma_8(z)$</td><td>Enhanced growth at $z\lesssim2$ — deviation from $\Lambda$CDM</td><td>Testable with DESI/Euclid</td></tr>
+        <tr><td>Ultra-faint dwarfs</td><td>Near-Newtonian (low $M/M_0$) — distinct from MOND</td><td>Testable with Local Group</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 9: QUICK REFERENCE ═══════════ -->
+<div class="sec" id="s9">
+  <div class="sec-header">
+    <div class="sec-num">Section 9</div>
+    <div class="sec-title">Quick Reference — All Key Equations</div>
+  </div>
+
+  <table class="ref-table">
+    <thead><tr><th>Name</th><th>Equation</th><th>Eq. no.</th></tr></thead>
+    <tbody>
+      <tr><td>Newton's law</td><td>$F = GMm/r^2$</td><td>(1.1)</td></tr>
+      <tr><td>Modified force</td><td>$F = G_\text{eff}(M,r,t)\,Mm/r^2$</td><td>(2.1)</td></tr>
+      <tr><td>Effective coupling</td><td>$G_\text{eff} = G[1+\beta(1-e^{-M/M_0})][1+\gamma e^{-r/r_0}][1+\delta(t)]$</td><td>(2.2)</td></tr>
+      <tr><td>Modified potential</td><td>$\Phi(r) = -(GM/r)[1+\beta(1-e^{-M/M_0})]$</td><td>(3.1)</td></tr>
+      <tr><td>Circular velocity</td><td>$v_\text{circ} = \sqrt{G_\text{eff}(M,r,t)\,M(r)/r}$</td><td>(3.5)</td></tr>
+      <tr><td>Particle Lagrangian</td><td>$\mathcal{L} = \tfrac{1}{2}mv^2 + G_\text{eff}Mm/r$</td><td>(4.1)</td></tr>
+      <tr><td>Relativistic action</td><td>$S = \int\sqrt{-g}[f(\phi)R/(16\pi G)+\mathcal{L}_m+\mathcal{L}_\phi+\mathcal{L}_A+\mathcal{L}_\chi]\,\mathrm{d}^4x$</td><td>(4.2)</td></tr>
+      <tr><td>Coupling function</td><td>$f(\phi) = 1+\beta(1-e^{-\phi})$, $\phi\sim M/M_0$</td><td>(4.6)</td></tr>
+      <tr><td>Modified Einstein eq.</td><td>$G_{\mu\nu} = [8\pi G/f(\phi)]\,T_{\mu\nu} + \text{field terms}$</td><td>(4.7)</td></tr>
+      <tr><td>Modified Poisson eq.</td><td>$\nabla^2\Phi = 4\pi G a^2\delta\rho[1+\beta(1-e^{-\bar\phi})]$</td><td>(5.2)</td></tr>
+      <tr><td>Growth equation</td><td>$\ddot\delta + 2H\dot\delta = 4\pi G\bar\rho[1+\beta(1-e^{-\bar\phi})]\delta$</td><td>(5.4)</td></tr>
+      <tr><td>N-body acceleration</td><td>$\vec a_i = -G\sum_j m_j\vec r_{ij}/r_{ij}^3\cdot[1+\beta(1-e^{-m_j/M_0})][1+\gamma e^{-r_{ij}/r_0}][1+\delta(t)]$</td><td>(7.2)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ═══════════ LEARNING OBJECTIVES ═══════════ -->
+<div id="s10" class="objectives">
+  <h3>Learning Objectives</h3>
+  <ul>
+    <li>State the EMGT force law and explain what each of the three multiplicative factors physically represents.</li>
+    <li>Derive the modified force from the modified potential by differentiation, correctly identifying which terms depend on $r$ and which do not.</li>
+    <li>Show algebraically that EMGT recovers Newtonian gravity in the limit $M/M_0 \ll 1$, and state quantitatively why the Solar System is unaffected.</li>
+    <li>Explain why the exponential saturation factor $(1-e^{-M/M_0})$ is preferable to a power law for large-$M$ behaviour.</li>
+    <li>Write down the particle Lagrangian for EMGT and apply the Euler-Lagrange equation to recover the force law.</li>
+    <li>Identify the three fields ($\phi$, $A_\mu$, $\chi$) in the relativistic action, state which each controls, and explain the role of the coupling function $f(\phi)$.</li>
+    <li>State the modified Poisson equation and growth equation for cosmological perturbations, and explain how enhanced structure growth compensates for the absence of dark matter in $P(k)$.</li>
+    <li>Implement the EMGT force law in an N-body simulation kernel, identifying which enhancement factor can be pre-computed for efficiency.</li>
+    <li>Compare EMGT with Newtonian gravity, MOND, GR/$\Lambda$CDM, and $f(R)$: give one advantage and one limitation of each relative to EMGT.</li>
+    <li>Describe the Bullet Cluster and explain why it is the single biggest observational challenge for EMGT.</li>
+  </ul>
+</div>
+
+</div><!-- /.content -->
+</div><!-- /.page-body -->
+</div><!-- /.wrap -->
+
+<script>
+// Sidebar active-link highlighting on scroll
+(function(){
+  var links = document.querySelectorAll('.sidebar a');
+  var secs = Array.from(links).map(function(a){
+    var id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  });
+  function update(){
+    var scrollY = window.scrollY + 80;
+    var active = 0;
+    secs.forEach(function(sec,i){
+      if(sec && sec.offsetTop <= scrollY) active = i;
+    });
+    links.forEach(function(a,i){
+      a.classList.toggle('active', i === active);
+    });
+  }
+  window.addEventListener('scroll', update, {passive:true});
+  update();
+})();
+</script>
+</body>
+</html>

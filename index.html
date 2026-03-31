@@ -1212,6 +1212,7 @@ footer {
       <li><a href="#visualisations" class="current" onclick="navScrollTo('visualisations',event)">Visualisations</a></li>
       <li><a href="#coming-soon" onclick="navScrollTo('coming-soon',event)">Coming Soon</a></li>
       <li><a href="#revision" onclick="navScrollTo('revision',event)">Revision</a></li>
+      <li><a href="#theory" onclick="navScrollTo('theory',event)">Theory</a></li>
       <li><a href="#about" onclick="navScrollTo('about',event)">About</a></li>
     </ul>
 
@@ -1997,6 +1998,7 @@ footer {
       <button class="rev-filter-btn" data-filter="maths" onclick="revFilter('maths',this)">Maths</button>
       <button class="rev-filter-btn" data-filter="as" onclick="revFilter('as',this)">AS Level</button>
       <button class="rev-filter-btn" data-filter="a2" onclick="revFilter('a2',this)">A2 Level</button>
+      <button class="rev-filter-btn" data-filter="theory" onclick="revFilter('theory',this)">Theory</button>
     </div>
 
     <!-- Notes grid -->
@@ -2078,12 +2080,85 @@ footer {
         </div>
       </div>
 
+      <!-- ── EMGT Theory Notes ── -->
+      <div class="rev-card" data-subjects="physics a2 theory" style="animation-delay:0.2s">
+        <div class="rev-card-strip" style="background:var(--blue);"></div>
+        <div class="rev-card-body">
+          <div class="rev-card-eyebrow">
+            <span class="rev-tag rev-tag-exam" style="color:#2E74B5;background:#EFF3FA;border-color:#C5D8EE;">● Live</span>
+            <span class="rev-tag rev-tag-topic" style="color:#2E74B5;background:#EFF3FA;border-color:#C5D8EE;">Physics</span>
+            <span class="rev-tag rev-tag-level">Theory</span>
+          </div>
+          <h3 class="rev-card-title">Enhanced Modified<br>Gravity Theory</h3>
+          <p class="rev-card-desc">A self-consistent dark-matter-free theory of gravity. Full derivation from Newton to Lagrangian field theory, cosmological perturbation equations, and N-body simulation implementation.</p>
+          <div class="rev-card-chips">
+            <span class="chip">Modified Gravity</span>
+            <span class="chip">KaTeX equations</span>
+            <span class="chip">Lagrangian</span>
+            <span class="chip">Scalar fields</span>
+            <span class="chip">N-body simulations</span>
+            <span class="chip">Cosmology</span>
+          </div>
+        </div>
+        <div class="rev-card-foot">
+          <a href="emg_theory_notes.html" target="_blank" class="rev-open-btn">Open Notes ↗</a>
+          <span class="rev-meta">9 sections · 12 equations</span>
+        </div>
+      </div>
+
       <!-- Empty state -->
       <div class="rev-empty" id="rev-empty">No revision notes match this filter yet.</div>
 
     </div><!-- /rev-grid -->
 
   </div><!-- /grid-wrap -->
+</section>
+
+<div class="divider"></div>
+
+<!-- ── BONUS THEORY ──────────────────────────────────── -->
+<section id="theory" style="padding:3.5rem 0 2rem;">
+  <div class="sec-head" style="max-width:1100px;margin:0 auto;padding:0 2rem 2rem;">
+    <div>
+      <p class="sec-super">Bonus · Original Research</p>
+      <h2 class="sec-h2">Theory: Enhanced Modified Gravity</h2>
+    </div>
+    <p style="font-size:.85rem;color:var(--ink3);max-width:60ch;line-height:1.72;margin-top:.6rem;">
+      An original alternative to dark matter, developed from first principles. Gravity strengthens for massive, self-gravitating systems via a mass-, distance-, and time-dependent effective coupling. Derived from a Lagrangian field theory and implemented in N-body simulation code.
+    </p>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+
+    <!-- Theory card -->
+    <div style="background:var(--bg-raised,#F0EDE9);border:1px solid var(--border-mid,#D6D0C8);border-radius:10px;padding:1.5rem;border-top:3px solid var(--blue,#2E74B5);">
+      <div style="font-family:var(--mono,monospace);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4,#9E958D);margin-bottom:.5rem;">Core Formula</div>
+      <div style="font-family:var(--mono,monospace);font-size:.78rem;color:var(--blue,#2E74B5);background:#EFF3FA;border:1px solid #C5D8EE;border-left:3px solid var(--blue,#2E74B5);border-radius:0 6px 6px 0;padding:.6rem .9rem;margin:.5rem 0;line-height:1.7;">
+        G<sub>eff</sub>(M,r,t) = G &middot;<br>
+        [1&nbsp;+&nbsp;&beta;(1&minus;e<sup>&minus;M/M&#8320;</sup>)]<br>
+        [1&nbsp;+&nbsp;&gamma;&hairsp;e<sup>&minus;r/r&#8320;</sup>]<br>
+        [1&nbsp;+&nbsp;&delta;(t)]
+      </div>
+      <p style="font-size:.78rem;color:var(--ink3,#6B6158);line-height:1.65;margin-top:.65rem;">Three cooperative factors: <strong style="color:var(--ink)">mass-dependent</strong> enhancement (galaxies/clusters), <strong style="color:var(--ink)">scale-dependent</strong> Yukawa correction (Solar System unaffected), and <strong style="color:var(--ink)">time-dependent</strong> growth (CMB preserved).</p>
+    </div>
+
+    <!-- What's covered card -->
+    <div style="background:var(--bg-raised,#F0EDE9);border:1px solid var(--border-mid,#D6D0C8);border-radius:10px;padding:1.5rem;border-top:3px solid #6B3FA0;">
+      <div style="font-family:var(--mono,monospace);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4,#9E958D);margin-bottom:.7rem;">What the notes cover</div>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:.38rem;">
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>Full derivation from Newton&rsquo;s law to modified force</li>
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>Particle Lagrangian and relativistic action (3 fields)</li>
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>Modified Poisson equation and structure growth ODE</li>
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>N-body simulation pseudocode</li>
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>Comparison with MOND, &Lambda;CDM, f(R) gravity</li>
+        <li style="font-size:.8rem;color:var(--ink2,#3D3730);display:flex;gap:.5rem;align-items:baseline;"><span style="color:#6B3FA0;font-size:.7rem;flex-shrink:0;">&#9654;</span>Observational predictions and tests (SPARC, Euclid, DESI)</li>
+      </ul>
+      <div style="margin-top:1.1rem;">
+        <a href="emg_theory_notes.html" target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;background:var(--blue,#2E74B5);color:#fff;font-size:.72rem;font-family:var(--mono,monospace);letter-spacing:.04em;padding:.42rem .9rem;border-radius:6px;text-decoration:none;transition:opacity .15s;" onmouseover="this.style.opacity='.82'" onmouseout="this.style.opacity='1'">Read Full Notes &#8599;</a>
+      </div>
+    </div>
+
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -2126,6 +2201,7 @@ footer {
       <li><a href="#visualisations" onclick="navScrollTo('visualisations',event)">Visualisations</a></li>
       <li><a href="#coming-soon" onclick="navScrollTo('coming-soon',event)">Coming Soon</a></li>
       <li><a href="#revision" onclick="navScrollTo('revision',event)">Revision</a></li>
+      <li><a href="#theory" onclick="navScrollTo('theory',event)">Theory</a></li>
       <li><a href="#about" onclick="navScrollTo('about',event)">About</a></li>
       <li><a href="#">GitHub</a></li>
     </ul>
