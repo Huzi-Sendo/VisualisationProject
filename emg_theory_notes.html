@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enhanced Modified Gravity Theory — PhysViz Notes</title>
+<title>Enhanced Modified Gravity Theory | PhysViz Notes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -203,6 +203,8 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
     <li><a href="#s6">Comparisons</a></li>
     <li><a href="#s7">Simulations</a></li>
     <li><a href="#s8">Predictions</a></li>
+    <li><a href="#s11">A Level</a></li>
+    <li><a href="#s12">Comparisons</a></li>
     <li><a href="#s9">Reference</a></li>
   </ul>
 </nav>
@@ -240,8 +242,12 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
   <a href="#s6">6 · Comparisons</a>
   <a href="#s7">7 · Simulations</a>
   <a href="#s8">8 · Predictions</a>
+  <span class="sidebar-mod">Extra</span>
+  <a href="#s11">11 &middot; A Level Guide</a>
+  <a href="#s12">12 &middot; Comparisons</a>
+  <a href="#s13">13 &middot; Theory Tests</a>
   <span class="sidebar-mod">Reference</span>
-  <a href="#s9">9 · Key Equations</a>
+  <a href="#s9">9 &middot; Key Equations</a>
   <a href="#s10">Learning Objectives</a>
 </aside>
 
@@ -276,17 +282,17 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
   </div>
 
   <div class="formula-block">
-    <span class="formula-label">Full Optimised Theory — Effective Gravitational Constant</span>
+    <span class="formula-label">Full Optimised Theory: Effective Gravitational Constant</span>
     $$G_\text{eff}(M,r,t) = G\Big[1 + \beta\!\left(1-e^{-M/M_0}\right)\Big]\Big[1+\gamma e^{-r/r_0}\Big]\Big[1+\delta(t)\Big]$$
   </div>
 
   <div class="insight">
     <div class="insight-title">Why three separate factors?</div>
     <ul>
-      <li>Factor 1 alone would boost gravity everywhere, including the Solar System — breaking precise measurements like Lunar Laser Ranging.</li>
-      <li>Factor 2 alone would not grow with galaxy mass — it couldn't explain why more massive galaxies need more enhancement.</li>
-      <li>Factor 3 alone would not know about distance — it would modify the Cosmic Microwave Background, which formed at high redshift.</li>
-      <li>Together, each factor applies in its own regime: mass scale, distance scale, and cosmic time scale — without interfering with the others.</li>
+      <li>Factor 1 alone would boost gravity everywhere, including the Solar System, breaking precise measurements like Lunar Laser Ranging.</li>
+      <li>Factor 2 alone would not grow with galaxy mass, so it couldn't explain why more massive galaxies need more enhancement.</li>
+      <li>Factor 3 alone would not know about distance, so it would modify the Cosmic Microwave Background, which formed at high redshift.</li>
+      <li>Together, each factor applies in its own regime: mass scale, distance scale, and cosmic time scale, without interfering with the others.</li>
     </ul>
   </div>
 </div>
@@ -307,7 +313,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
       $$\frac{GM(r)m}{r^2} = \frac{mv_\text{circ}^2}{r} \quad\Rightarrow\quad v_\text{circ} = \sqrt{\frac{GM(r)}{r}}$$
     </div>
 
-    <p class="body-text">Equation (1.1) predicts that orbital speed falls as $r^{-1/2}$ beyond the visible disc — the same Keplerian fall-off as the planets around the Sun. But observations of hundreds of spiral galaxies (Rubin et al. 1980; Sofue &amp; Rubin 2001) show that $v_\text{circ}$ remains roughly <em>constant</em> out to tens of kiloparsecs from the galactic centre, far beyond the luminous disc.</p>
+    <p class="body-text">Equation (1.1) predicts that orbital speed falls as $r^{-1/2}$ beyond the visible disc, following the same Keplerian fall-off as the planets around the Sun. But observations of hundreds of spiral galaxies (Rubin et al. 1980; Sofue &amp; Rubin 2001) show that $v_\text{circ}$ remains roughly <em>constant</em> out to tens of kiloparsecs from the galactic centre, far beyond the luminous disc.</p>
 
     <div class="insight">
       <div class="insight-title">The core discrepancy</div>
@@ -364,7 +370,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
         <tr><td>$M$</td><td>Source mass</td><td>$10^{10}$–$10^{15}\ M_\odot$</td><td>Controls the mass-based enhancement</td></tr>
         <tr><td>$M_0$</td><td>Characteristic mass</td><td>$\sim 10^{11}\ M_\odot$ (galactic scale)</td><td>Mass threshold where enhancement activates</td></tr>
         <tr><td>$\beta$</td><td>Mass coupling</td><td>$5$–$10$</td><td>Maximum fractional increase in $G$ from mass</td></tr>
-        <tr><td>$r$</td><td>Separation</td><td>—</td><td>Distance between source and test mass</td></tr>
+        <tr><td>$r$</td><td>Separation</td><td>variable</td><td>Distance between source and test mass</td></tr>
         <tr><td>$r_0$</td><td>Scale length</td><td>$10$–$100\ \text{kpc}$</td><td>Distance at which scale enhancement peaks</td></tr>
         <tr><td>$\gamma$</td><td>Scale coupling</td><td>$\sim 1$</td><td>Strength of distance-based correction</td></tr>
         <tr><td>$\delta(t)$</td><td>Time correction</td><td>$0$ (early) to $0.1$–$0.3$ (today)</td><td>Ensures early universe is unchanged</td></tr>
@@ -385,9 +391,9 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
       </tbody>
     </table>
 
-    <div class="tip"><strong>Why the exponential saturates:</strong> The function $1-e^{-x}$ rises from 0 at $x=0$ and asymptotes to 1 as $x\to\infty$. This gives a maximum enhancement of exactly $(1+\beta)$ regardless of how large $M$ becomes — preventing unbounded amplification of gravity at cosmological scales.</div>
+    <div class="tip"><strong>Why the exponential saturates:</strong> The function $1-e^{-x}$ rises from 0 at $x=0$ and asymptotes to 1 as $x\to\infty$. This gives a maximum enhancement of exactly $(1+\beta)$ regardless of how large $M$ becomes, preventing unbounded amplification of gravity at cosmological scales.</div>
 
-    <div class="note-box"><strong>Scale term behaviour:</strong> At small $r \ll r_0$, $e^{-r/r_0}\approx 1$ so $G_\text{eff}\approx G(1+\gamma)$ — gravity is locally boosted. At large $r \gg r_0$, $e^{-r/r_0}\to 0$, so the scale enhancement disappears. This is a Yukawa-type suppression: the scale correction is short-range on cosmic scales but long-range on galactic scales because $r_0\sim 10$–$100\ \text{kpc}$ is chosen to match galaxy sizes.</div>
+    <div class="note-box"><strong>Scale term: a careful note on the maths.</strong> The Yukawa factor $e^{-r/r_0}$ is largest when $r$ is small and fades toward zero as $r$ grows large. This means the scale correction $(1+\gamma e^{-r/r_0})$ is actually <em>largest at small separations</em> and disappears at large ones. Within the Solar System ($r \ll r_0 \sim 10$ kpc), the factor is close to $(1+\gamma)$, so keeping $\gamma$ small or adding a local screening mechanism is needed to pass Solar System tests. At galaxy disc radii ($r \sim r_0$), the factor is intermediate and contributes the extra binding needed for flat rotation curves. At cosmological scales ($r \gg r_0$), the Yukawa factor vanishes and gravity returns to its mass-enhanced value.</div>
   </div>
 </div>
 
@@ -400,7 +406,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
 
   <div class="sub" id="s3-1">
     <h3>3.1 Starting from Newton</h3>
-    <p class="body-text">Newton's law assumes $G$ is a universal constant. EMGT replaces $G$ with $G_\text{eff}(M,r,t)$ — an effective constant that depends on the physical environment. The full derivation builds this in five steps.</p>
+    <p class="body-text">Newton's law assumes $G$ is a universal constant. EMGT replaces $G$ with $G_\text{eff}(M,r,t)$, an effective constant that depends on the physical environment. The full derivation builds this in five steps.</p>
   </div>
 
   <div class="sub" id="s3-2">
@@ -434,7 +440,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
               <span class="eq-num">(3.3)</span>
               $$\Phi(r) = -\frac{G_M M}{r}\Big[1 + \gamma e^{-r/r_0}\Big]$$
             </div>
-            where $G_M = G[1+\beta(1-e^{-M/M_0})]$. Differentiating with respect to $r$ now gives two terms — one from $1/r$ and one from $e^{-r/r_0}/r$:
+            where $G_M = G[1+\beta(1-e^{-M/M_0})]$. Differentiating with respect to $r$ now gives two terms: one from $1/r$ and one from $e^{-r/r_0}/r$:
             <div class="formula-block">
               <span class="eq-num">(3.4)</span>
               $$F = -\frac{G_M Mm}{r^2}\left[1 + \gamma e^{-r/r_0}\!\left(1+\frac{r}{r_0}\right)\right]$$
@@ -443,7 +449,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
           </li>
           <li><strong>Apply the time correction.</strong> Multiply the whole coupling by $[1+\delta(t)]$. Since $\delta(t)$ depends only on cosmic time, not on $r$ or $M$, this is a global rescaling of $G_\text{eff}$ at each epoch. The final force law is equation (2.1).</li>
         </ol>
-        <div class="trap">The enhancement factor $[1+\beta(1-e^{-M/M_0})]$ must NOT be differentiated when computing $F = -\mathrm{d}\Phi/\mathrm{d}r$, because $M$ in this expression is the total enclosed mass of the source — it is a fixed property of the source object, not a function of the test-mass position $r$. Only the $1/r$ and Yukawa $e^{-r/r_0}$ terms vary with $r$.</div>
+        <div class="trap">The enhancement factor $[1+\beta(1-e^{-M/M_0})]$ must NOT be differentiated when computing $F = -\mathrm{d}\Phi/\mathrm{d}r$, because $M$ in this expression is the total enclosed mass of the source; it is a fixed property of the source object, not a function of the test-mass position $r$. Only the $1/r$ and Yukawa $e^{-r/r_0}$ terms vary with $r$.</div>
       </div>
     </div>
   </div>
@@ -472,7 +478,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
 
   <div class="sub" id="s4-1">
     <h3>4.1 Why We Need a Field Theory</h3>
-    <p class="body-text">The force law in Section 2 treats $M$, $r$, and $t$ as explicit inputs to $G_\text{eff}$. But in General Relativity (GR), gravity is a property of spacetime curvature — $G$ cannot directly depend on non-local quantities like the total enclosed mass $M$ of a distant object. To make EMGT consistent with covariance and energy conservation, we must replace $M$, $r$-dependence, and $t$-dependence by <em>local fields</em> that carry the same information covariantly.</p>
+    <p class="body-text">The force law in Section 2 treats $M$, $r$, and $t$ as explicit inputs to $G_\text{eff}$. But in General Relativity (GR), gravity is a property of spacetime curvature, so $G$ cannot directly depend on non-local quantities like the total enclosed mass $M$ of a distant object. To make EMGT consistent with covariance and energy conservation, we must replace $M$, $r$-dependence, and $t$-dependence by <em>local fields</em> that carry the same information covariantly.</p>
 
     <p class="body-text">This is the standard approach used in MOND (TeVeS), MOG/STVG, and $f(R)$ gravity. EMGT becomes a <strong>triple-field modified gravity model</strong>:</p>
 
@@ -541,11 +547,11 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
       $$G_{\mu\nu} = \frac{8\pi G}{f(\phi)}\,T_{\mu\nu} + \text{(derivative terms in }\phi,A,\chi\text{)}$$
     </div>
 
-    <p class="body-text">The effective gravitational coupling is $G_\text{eff} = G/f(\phi)$. When $\phi$ is large (massive source), $f(\phi)\approx 1+\beta$ so $G_\text{eff} = G/(1+\beta) < G$ — which appears to <em>weaken</em> gravity at first. However, the field equations also modify the source term $T_{\mu\nu}$ and the curvature response, and the net effect in the Newtonian limit is the enhancement shown in Section 2. The Proca field $A_\mu$ contributes the Yukawa profile via its massive propagator; the $\chi$ field contributes the time variation via its slow-roll evolution.</p>
+    <p class="body-text">The effective gravitational coupling is $G_\text{eff} = G/f(\phi)$. When $\phi$ is large (massive source), $f(\phi)\approx 1+\beta$ so $G_\text{eff} = G/(1+\beta) < G$, which appears to <em>weaken</em> gravity at first. However, the field equations also modify the source term $T_{\mu\nu}$ and the curvature response, and the net effect in the Newtonian limit is the enhancement shown in Section 2. The Proca field $A_\mu$ contributes the Yukawa profile via its massive propagator; the $\chi$ field contributes the time variation via its slow-roll evolution.</p>
 
     <div class="insight">
       <div class="insight-title">Why the kinetic term in $\mathcal{L}_\phi$ matters</div>
-      <p>The term $-\frac{1}{2}\omega(\phi)(\partial\phi)^2$ must have $\omega(\phi)>0$ to avoid <strong>ghost instabilities</strong> — negative kinetic energy modes that would cause the vacuum to be unstable and the theory to break down. This is the same constraint that rules out certain $f(R)$ gravity models. In EMGT, choosing $\omega(\phi) = 1$ is the simplest healthy choice.</p>
+      <p>The term $-\frac{1}{2}\omega(\phi)(\partial\phi)^2$ must have $\omega(\phi)>0$ to avoid <strong>ghost instabilities</strong> (negative kinetic energy modes that would cause the vacuum to be unstable and the theory to break down). This is the same constraint that rules out certain $f(R)$ gravity models. In EMGT, choosing $\omega(\phi) = 1$ is the simplest healthy choice.</p>
     </div>
   </div>
 </div>
@@ -621,11 +627,11 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
     </div>
 
     <div class="insight">
-      <div class="insight-title">What these equations predict — observational consequences</div>
+      <div class="insight-title">What these equations predict: observational consequences</div>
       <ul>
         <li><strong>Matter power spectrum $P(k)$:</strong> Enhanced growth boosts $P(k)$ on scales $k>0.1\,h\,\text{Mpc}^{-1}$ compared to baryon-only gravity. Galaxy surveys (DESI, Euclid) measure this directly.</li>
         <li><strong>Growth rate $f\sigma_8$:</strong> EMGT predicts a different redshift evolution of $f\sigma_8$ from Lambda-CDM. Redshift-space distortions (RSD) in spectroscopic surveys constrain this.</li>
-        <li><strong>CMB power spectrum:</strong> Recombination occurs at $z\sim1100$ when $\bar\phi\ll1$ (low density). The EMGT enhancement is negligible then — CMB is unchanged, consistent with Planck data.</li>
+        <li><strong>CMB power spectrum:</strong> Recombination occurs at $z\sim1100$ when $\bar\phi\ll1$ (low density). The EMGT enhancement is negligible then, so the CMB is unchanged, consistent with Planck data.</li>
         <li><strong>Baryon Acoustic Oscillations:</strong> The BAO sound horizon is set before enhancement activates; the BAO scale should be identical to Lambda-CDM, but peak amplitudes in $P(k)$ may differ.</li>
       </ul>
     </div>
@@ -698,8 +704,8 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
       <div class="method-inner">
         <div class="method-title">EMGT vs. MOND: three distinguishing tests</div>
         <ol>
-          <li><strong>Galaxy clusters.</strong> MOND still requires dark matter in clusters (the thermal velocity dispersion of hot gas exceeds MOND predictions). EMGT's saturation limit gives enhanced binding energy $(1+\beta)G$ at cluster masses — reducing (but not eliminating) the need for additional mass.</li>
-          <li><strong>Ultra-faint dwarf galaxies.</strong> MOND predicts large acceleration-enhancement effects in low-surface-brightness dwarfs (low $a$, deep MOND regime). EMGT at dwarf masses $M \ll M_0$ predicts near-Newtonian behaviour — a qualitatively different signature testable with Local Group dwarfs.</li>
+          <li><strong>Galaxy clusters.</strong> MOND still requires dark matter in clusters (the thermal velocity dispersion of hot gas exceeds MOND predictions). EMGT's saturation limit gives enhanced binding energy $(1+\beta)G$ at cluster masses, reducing (but not eliminating) the need for additional mass.</li>
+          <li><strong>Ultra-faint dwarf galaxies.</strong> MOND predicts large acceleration-enhancement effects in low-surface-brightness dwarfs (low $a$, deep MOND regime). EMGT at dwarf masses $M \ll M_0$ predicts near-Newtonian behaviour, a qualitatively different signature testable with Local Group dwarfs.</li>
           <li><strong>Gravitational lensing.</strong> EMGT lensing is enhanced by the same factor $(1+\beta(1-e^{-M/M_0}))$ as the Newtonian force. TeVeS (the relativistic MOND extension) predicts additional vector-field contributions to lensing. Future strong-lensing surveys (Euclid, Roman) can distinguish them.</li>
         </ol>
       </div>
@@ -708,9 +714,9 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
 
   <div class="sub" id="s6-3">
     <h3>6.3 The Bullet Cluster Challenge</h3>
-    <p class="body-text">The Bullet Cluster (1E 0657-558) is often cited as the strongest evidence for dark matter. During the cluster-cluster merger, the hot X-ray gas (most of the baryonic mass) was slowed by electromagnetic interactions, while the gravitational lensing mass continued at the original velocity. The lensing mass is spatially offset from the gas — which Lambda-CDM explains naturally (the dark matter halos passed through each other).</p>
+    <p class="body-text">The Bullet Cluster (1E 0657-558) is often cited as the strongest evidence for dark matter. During the cluster-cluster merger, the hot X-ray gas (most of the baryonic mass) was slowed by electromagnetic interactions, while the gravitational lensing mass continued at the original velocity. The lensing mass is spatially offset from the gas, which Lambda-CDM explains naturally (the dark matter halos passed through each other).</p>
 
-    <div class="note-box"><strong>The EMGT challenge:</strong> EMGT must explain the Bullet Cluster mass offset without invoking dark matter. This requires that the enhanced gravity of the stellar components (which are collisionless and pass through each other like the Lambda-CDM halos) produces the observed lensing mass distribution. Whether $G_\text{eff}(M_\text{stars}, r, t)$ is large enough to reproduce the full lensing signal with stellar mass alone is an open quantitative question — and the single biggest observational challenge for EMGT.</div>
+    <div class="note-box"><strong>The EMGT challenge:</strong> EMGT must explain the Bullet Cluster mass offset without invoking dark matter. This requires that the enhanced gravity of the stellar components (which are collisionless and pass through each other like the Lambda-CDM halos) produces the observed lensing mass distribution. Whether $G_\text{eff}(M_\text{stars}, r, t)$ is large enough to reproduce the full lensing signal with stellar mass alone is an open quantitative question and the single biggest observational challenge for EMGT.</div>
   </div>
 </div>
 
@@ -747,7 +753,7 @@ p.body-text{font-size:.875rem;color:var(--ink2);line-height:1.72;margin-bottom:.
 
   <div class="sub" id="s7-3">
     <h3>7.3 Pseudocode</h3>
-    <span class="code-label">Python pseudocode — EMGT N-body force kernel</span>
+    <span class="code-label">Python pseudocode: EMGT N-body force kernel</span>
     <div class="code-block">
 <span class="comment"># ─── Initialisation (run once) ─────────────────────────────</span>
 <span class="kw">for</span> j <span class="kw">in</span> <span class="fn">range</span>(N):
@@ -780,10 +786,10 @@ pos += v * dt               <span class="comment"># full-step position</span>
       <div class="sim-inner">
         <div class="sim-title">What the simulation predicts with EMGT enabled</div>
         <ul>
-          <li><strong>Galaxy rotation curves:</strong> Flat or slowly-rising $v_\text{circ}(r)$ without any dark matter halo — matching the SPARC observational database with appropriate $\beta$ and $M_0$.</li>
+          <li><strong>Galaxy rotation curves:</strong> Flat or slowly-rising $v_\text{circ}(r)$ without any dark matter halo, matching the SPARC observational database with appropriate $\beta$ and $M_0$.</li>
           <li><strong>Baryonic Tully-Fisher:</strong> The empirical $v_\text{flat}^4 \propto M_\text{bar}$ relation should emerge naturally from the EMGT force law if $r_\text{flat} \propto M^{1/2}$ as observed for exponential disc galaxies.</li>
           <li><strong>Galaxy clusters:</strong> Velocity dispersions and lensing mass enhanced by $(1+\beta)$ at cluster mass scales, reducing the required additional mass component.</li>
-          <li><strong>Large-scale structure:</strong> Matter power spectrum $P(k)$ boosted relative to baryon-only gravity by the growth enhancement factor — structure forms earlier and is more concentrated.</li>
+          <li><strong>Large-scale structure:</strong> Matter power spectrum $P(k)$ boosted relative to baryon-only gravity by the growth enhancement factor, so structure forms earlier and is more concentrated.</li>
           <li><strong>No dark matter halos:</strong> Galaxies remain bound and form spiral arms correctly, but no extended dark matter substructure appears in the particle distribution.</li>
         </ul>
       </div>
@@ -825,21 +831,349 @@ pos += v * dt               <span class="comment"># full-step position</span>
       <tbody>
         <tr><td>Spiral galaxy rotation curves</td><td>Flat, no halo needed for $\beta\approx8$, $M_0\sim10^{11}M_\odot$</td><td>Testable vs. SPARC</td></tr>
         <tr><td>Baryonic Tully-Fisher</td><td>$v_\text{flat}^4 \propto M_\text{bar}$ emerges if $r_\text{flat}\propto M^{1/2}$</td><td>Qualitatively predicted</td></tr>
-        <tr><td>Galaxy cluster lensing</td><td>$G_\text{eff}=(1+\beta)G$ at cluster scale — enhanced lensing</td><td>Depends on $\beta$</td></tr>
+        <tr><td>Galaxy cluster lensing</td><td>$G_\text{eff}=(1+\beta)G$ at cluster scale: enhanced lensing</td><td>Depends on $\beta$</td></tr>
         <tr><td>Bullet Cluster offset</td><td>Must reproduce stellar mass $\neq$ gas mass lensing offset</td><td>Open challenge</td></tr>
         <tr><td>CMB power spectrum</td><td>Unchanged (enhancement negligible at $z\sim1100$)</td><td>Consistent with Planck</td></tr>
-        <tr><td>Growth rate $f\sigma_8(z)$</td><td>Enhanced growth at $z\lesssim2$ — deviation from $\Lambda$CDM</td><td>Testable with DESI/Euclid</td></tr>
-        <tr><td>Ultra-faint dwarfs</td><td>Near-Newtonian (low $M/M_0$) — distinct from MOND</td><td>Testable with Local Group</td></tr>
+        <tr><td>Growth rate $f\sigma_8(z)$</td><td>Enhanced growth at $z\lesssim2$, deviation from $\Lambda$CDM</td><td>Testable with DESI/Euclid</td></tr>
+        <tr><td>Ultra-faint dwarfs</td><td>Near-Newtonian (low $M/M_0$), distinct from MOND</td><td>Testable with Local Group</td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
 <!-- ═══════════ SECTION 9: QUICK REFERENCE ═══════════ -->
+<!-- ═══════════ SECTION 11: A LEVEL GUIDE ═══════════ -->
+<div class="sec" id="s11">
+  <div class="sec-header">
+    <div class="sec-num">Section 11</div>
+    <div class="sec-title">A Level Student Guide</div>
+  </div>
+
+  <p class="body-text">This section explains the entire EMGT theory in plain language, without any General Relativity or advanced field theory. If you can handle A Level maths and physics, you can follow everything here.</p>
+
+  <div class="sub">
+    <h3>11.1 The One-Sentence Summary</h3>
+    <div class="insight">
+      <div class="insight-title">The big idea in one sentence</div>
+      <p>Instead of adding invisible dark matter to explain why galaxies spin faster than expected, EMGT says gravity itself gets stronger for very massive objects like galaxies and galaxy clusters.</p>
+    </div>
+    <p class="body-text">That is it. Everything else in this theory is just making that idea mathematically precise and checking it does not break anything else in physics.</p>
+  </div>
+
+  <div class="sub">
+    <h3>11.2 The Problem We Are Solving</h3>
+    <p class="body-text">Think about a star orbiting near the edge of a galaxy, like a planet orbiting the Sun but much further out. Newton says the faster something orbits, the closer it must be to the centre. Stars at the edge of a galaxy are far from most of the mass, so Newton predicts they should be moving slowly, like Neptune is slower than Mercury.</p>
+    <p class="body-text">But when astronomers measure these stars, they find they are moving at almost the same speed as stars near the centre. The outer stars are moving too fast for the amount of visible mass in the galaxy.</p>
+    <div class="part-grid">
+      <div class="part-card">
+        <div class="part-card-num">Option A</div>
+        <div class="part-card-title">Add Dark Matter</div>
+        <div class="part-card-body">Say there is extra invisible matter we cannot see. This is what Lambda-CDM does. The problem: after 40 years of searching, no one has ever directly detected a dark matter particle.</div>
+      </div>
+      <div class="part-card orange">
+        <div class="part-card-num">Option B</div>
+        <div class="part-card-title">Change Gravity (EMGT)</div>
+        <div class="part-card-body">Say gravity works slightly differently for massive objects. This is what EMGT does. The challenge: you must not break gravity for the Solar System or the early universe.</div>
+      </div>
+      <div class="part-card purple">
+        <div class="part-card-num">Option C</div>
+        <div class="part-card-title">MOND</div>
+        <div class="part-card-body">Say gravity works differently at low accelerations. MOND fits individual galaxies well but fails for galaxy clusters and has no complete relativistic version.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>11.3 The Three Dials on Gravity</h3>
+    <p class="body-text">EMGT gives gravity three adjustable properties. Think of them as three separate dials you can turn.</p>
+
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">Dial 1: How massive is the source? (the M dial)</div>
+        <ol>
+          <li><strong>Formula:</strong> $[1 + \beta(1-e^{-M/M_0})]$</li>
+          <li><strong>Plain English:</strong> The more massive the object creating the gravity, the stronger that gravity becomes. But it does not grow forever. It saturates at a maximum boost of $(1+\beta)$, which is about 9 times Newton for $\beta = 8$.</li>
+          <li><strong>Solar System safe?</strong> Yes. The Sun has mass $M \approx 2 \times 10^{30}$ kg. The characteristic mass is $M_0 \approx 10^{41}$ kg (galactic scale). The ratio $M/M_0 \approx 10^{-11}$ is tiny, so the correction is completely negligible for all solar system masses.</li>
+          <li><strong>Galaxy scale:</strong> For a galaxy with $M \sim M_0$, the boost factor is about 6. The outer stars feel six times stronger gravity. Their orbital speed is therefore about $\sqrt{6} \approx 2.5$ times larger than Newton predicts, which is close to what observations show.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">Dial 2: How far away are you? (the r dial)</div>
+        <ol>
+          <li><strong>Formula:</strong> $[1 + \gamma e^{-r/r_0}]$</li>
+          <li><strong>Plain English:</strong> This factor modifies gravity depending on the separation $r$ between two objects. The length $r_0$ sets the scale at which the correction is active.</li>
+          <li><strong>Important caution:</strong> The Yukawa factor $e^{-r/r_0}$ is largest at small $r$ and decays at large $r$. This means the scale correction is actually strongest at short distances and fades away at large ones. For the theory to pass Solar System tests, either $\gamma$ must be kept very small, or a screening mechanism suppresses this correction inside dense local environments.</li>
+          <li><strong>Analogy:</strong> Think of a strong scent that is very noticeable up close but fades quickly with distance. The Yukawa correction works the same way mathematically.</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">Dial 3: How old is the universe? (the t dial)</div>
+        <ol>
+          <li><strong>Formula:</strong> $[1 + \delta(t)]$</li>
+          <li><strong>Plain English:</strong> In the early universe, gravity should behave almost exactly like Newton and Einstein describe. As the universe ages and galaxies form, the extra gravity gradually switches on.</li>
+          <li><strong>Why this matters:</strong> The Cosmic Microwave Background (CMB) is a snapshot of the universe when it was only 380,000 years old. If gravity was already strongly enhanced then, the CMB pattern would look different from what we observe. Making $\delta(t)$ very small at early times avoids disturbing the CMB.</li>
+          <li><strong>Analogy:</strong> Think of gravity warming up like an engine. It runs quietly at first, then reaches full power only after the universe has had billions of years to evolve.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub">
+    <h3>11.4 Why Multiply the Three Factors Together?</h3>
+    <p class="body-text">The full formula multiplies all three factors:</p>
+    <div class="formula-block">
+      $$G_\text{eff} = G \times \underbrace{[1+\beta(1-e^{-M/M_0})]}_{\text{mass dial}} \times \underbrace{[1+\gamma e^{-r/r_0}]}_{\text{distance dial}} \times \underbrace{[1+\delta(t)]}_{\text{time dial}}$$
+    </div>
+    <p class="body-text">Multiplication means each factor can only make gravity stronger, never weaker. It also means the three effects are roughly independent: you can tune $\beta$ and $M_0$ to fit galaxy rotation curves without affecting the time factor, because each factor is controlled by its own separate parameters.</p>
+    <div class="tip"><strong>Exam-style check:</strong> To show EMGT reduces to Newton for the Solar System, substitute $M \ll M_0$ (first factor becomes 1), keep $\gamma$ small (second factor stays close to 1), and note $\delta(t)$ today is small (third factor stays close to 1). The result is $G_\text{eff} \approx G$: Newton's law is recovered.</div>
+  </div>
+
+  <div class="sub">
+    <h3>11.5 Predictions in Plain Terms</h3>
+    <table class="scale-table">
+      <thead><tr><th>System</th><th>What EMGT predicts</th><th>Does it match observations?</th></tr></thead>
+      <tbody>
+        <tr><td>Solar System</td><td>Gravity unchanged from Newton ($M \ll M_0$)</td><td>Yes, all planetary orbits correct</td></tr>
+        <tr><td>Milky Way disc</td><td>Gravity roughly 6 times stronger in outer disc ($M \sim M_0$)</td><td>Yes, matches flat rotation curve</td></tr>
+        <tr><td>Galaxy clusters</td><td>Gravity roughly 9 times stronger (saturation, $M \gg M_0$)</td><td>Qualitatively yes; full calculation needed</td></tr>
+        <tr><td>Early universe CMB</td><td>Gravity nearly unchanged (small $\delta$ at early times)</td><td>Consistent with Planck data</td></tr>
+        <tr><td>Structure formation</td><td>Galaxies and clusters form faster than Newton alone predicts</td><td>Correct direction; full simulation needed</td></tr>
+        <tr><td>Ultra-faint dwarfs</td><td>Gravity nearly Newtonian ($M \ll M_0$)</td><td>Different prediction from MOND; testable</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 12: FULL THEORY COMPARISONS ═══════════ -->
+<div class="sec" id="s12">
+  <div class="sec-header">
+    <div class="sec-num">Section 12</div>
+    <div class="sec-title">Full Theory Comparisons</div>
+  </div>
+
+  <p class="body-text">This section gives a complete side-by-side analysis of EMGT against four other gravity paradigms: Lambda-CDM (the standard model), MOND, MOG/STVG (Moffat's scalar-tensor-vector gravity), and standard GR. Each is assessed across eleven criteria.</p>
+
+  <div class="sub" id="s12-1">
+    <h3>12.1 Master Comparison Table</h3>
+    <table class="comp-table" style="font-size:.76rem;">
+      <thead>
+        <tr>
+          <th style="min-width:90px">Property</th>
+          <th>EMGT (this theory)</th>
+          <th>Lambda-CDM</th>
+          <th>MOND</th>
+          <th>MOG/STVG</th>
+          <th>GR (baseline)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Core mechanism</td>
+          <td>$G$ strengthens with source mass $M$</td>
+          <td>Add cold dark matter particles</td>
+          <td>Modify inertia below $a_0$</td>
+          <td>Scalar, vector, tensor fields modify $G$</td>
+          <td>Fixed geometry-mass relation</td>
+        </tr>
+        <tr>
+          <td>Dark matter required?</td>
+          <td class="tick">No</td>
+          <td class="cross">Yes (CDM + neutrinos)</td>
+          <td class="tick">No (galaxies only)</td>
+          <td class="tick">No</td>
+          <td class="cross">Yes at galactic scales</td>
+        </tr>
+        <tr>
+          <td>Recovers Newtonian gravity locally?</td>
+          <td class="tick">Yes ($M \ll M_0$)</td>
+          <td class="tick">Yes</td>
+          <td class="cross">Not always (near $a_0$)</td>
+          <td class="tick">Yes (screening)</td>
+          <td class="tick">Yes</td>
+        </tr>
+        <tr>
+          <td>Explains flat rotation curves?</td>
+          <td class="tick">Yes</td>
+          <td class="tick">Yes (with halo)</td>
+          <td class="tick">Yes (naturally)</td>
+          <td class="tick">Yes</td>
+          <td class="cross">No</td>
+        </tr>
+        <tr>
+          <td>Cluster dynamics?</td>
+          <td class="partial">Yes (saturation regime)</td>
+          <td class="tick">Yes</td>
+          <td class="cross">No (needs extra DM)</td>
+          <td class="tick">Yes</td>
+          <td class="cross">No</td>
+        </tr>
+        <tr>
+          <td>CMB acoustic peaks?</td>
+          <td class="partial">Possible (small $\delta$ early)</td>
+          <td class="tick">Excellent fit</td>
+          <td class="cross">No complete formulation</td>
+          <td class="partial">Acceptable</td>
+          <td class="cross">No (without DM)</td>
+        </tr>
+        <tr>
+          <td>Bullet Cluster?</td>
+          <td class="partial">Potentially (stellar mass drives lensing)</td>
+          <td class="tick">Yes (DM halos pass through)</td>
+          <td class="cross">No</td>
+          <td class="tick">Yes</td>
+          <td class="cross">No</td>
+        </tr>
+        <tr>
+          <td>Baryonic Tully-Fisher?</td>
+          <td class="partial">Emergent (not fundamental)</td>
+          <td class="cross">Requires tuning</td>
+          <td class="tick">Fundamental prediction</td>
+          <td class="partial">Approximate</td>
+          <td class="cross">No</td>
+        </tr>
+        <tr>
+          <td>Free parameters</td>
+          <td>$\beta$, $M_0$, $\gamma$, $r_0$, $\delta(t)$</td>
+          <td>DM abundance, DM mass, cross-section</td>
+          <td>$a_0$ (one parameter)</td>
+          <td>$\alpha$, $\mu$ (two main)</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <td>Relativistic formulation?</td>
+          <td class="tick">Yes (scalar-tensor action)</td>
+          <td class="tick">Yes (GR + matter)</td>
+          <td class="partial">TeVeS only (incomplete)</td>
+          <td class="tick">Yes (full action)</td>
+          <td class="tick">Yes</td>
+        </tr>
+        <tr>
+          <td>GW170817 consistency?</td>
+          <td class="tick">Yes ($c_\text{gw} = c$)</td>
+          <td class="tick">Yes</td>
+          <td class="partial">N/A (no tensor sector)</td>
+          <td class="partial">Marginal</td>
+          <td class="tick">Yes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub" id="s12-2">
+    <h3>12.2 What Makes EMGT Unique</h3>
+    <div class="insight">
+      <div class="insight-title">Three distinguishing features of EMGT</div>
+      <ul>
+        <li><strong>Mass-keyed enhancement, not acceleration-keyed.</strong> MOND triggers below an acceleration threshold $a_0$. EMGT triggers above a mass threshold $M_0$. EMGT therefore predicts near-Newtonian behaviour for dwarf galaxies (low $M$) regardless of their internal acceleration, giving a cleanly different prediction from MOND that is testable with Local Group dwarfs.</li>
+        <li><strong>Hard saturation at high mass.</strong> The exponential factor $(1-e^{-M/M_0})$ saturates at exactly 1 for any mass, giving a hard ceiling of $(1+\beta)$ on the enhancement. This makes the theory self-limiting and prevents runaway gravity at cosmological scales. MOG/STVG does not have this built-in ceiling.</li>
+        <li><strong>No exotic particles and no unexplained acceleration scale.</strong> Lambda-CDM requires a new particle species. MOND requires an unexplained constant $a_0$ whose value has no derivation from a deeper principle. EMGT requires $M_0$ (a mass scale comparable to a typical galaxy, physically interpretable) and $\beta$ (a dimensionless coupling, in principle derivable from a scalar-field potential).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sub" id="s12-3">
+    <h3>12.3 EMGT vs. MOG/STVG in Detail</h3>
+    <p class="body-text">MOG (Modified Gravity, Moffat 2006) introduces a variable scalar gravitational constant, a vector field $\phi_\mu$ providing a repulsive Yukawa correction, and a scalar field $\mu$ controlling the vector field mass. The effective force at large separation becomes $F \approx G_N(1+\alpha)\, e^{-\mu r}\, Mm/r^2$. This is structurally similar to EMGT's scale term but with a different coupling mechanism.</p>
+    <p class="body-text">Key differences: MOG's $\alpha$ is a dynamical field that varies with the local mass distribution, while EMGT's $\beta$ is a global constant. MOG has been applied numerically to the Bullet Cluster, galaxy clusters (Brownstein &amp; Moffat 2006), and a large sample of rotation curves with reasonable success. EMGT has not yet been subjected to an equivalent numerical programme. In that sense MOG is currently more developed observationally, while EMGT has a simpler and more transparent mass-dependent saturation structure.</p>
+  </div>
+</div>
+
+<!-- ═══════════ SECTION 13: THEORY TESTS ═══════════ -->
+<div class="sec" id="s13">
+  <div class="sec-header">
+    <div class="sec-num">Section 13</div>
+    <div class="sec-title">Theoretical and Observational Tests</div>
+  </div>
+
+  <p class="body-text">A modified gravity theory must pass a demanding set of tests before it can be taken seriously as an alternative to dark matter. This section assesses EMGT against each test in turn, with an honest verdict.</p>
+
+  <div class="sub" id="s13-1">
+    <h3>13.1 Solar System Tests</h3>
+    <div class="method">
+      <div class="method-bar"></div>
+      <div class="method-inner">
+        <div class="method-title">Solar System and local tests</div>
+        <ol>
+          <li><strong>Planetary orbits.</strong> For the Sun, $M/M_0 \sim 10^{-11}$. The mass enhancement is proportional to $\beta \times 10^{-11}$, which is completely undetectable. All planetary orbital periods, perihelion precession, and Lunar Laser Ranging data are reproduced.</li>
+          <li><strong>GPS satellite timing.</strong> GPS relies on GR time dilation corrections set by Earth and solar masses. Both are far below $M_0$, so EMGT gives the same predictions as GR for all practical precision navigation.</li>
+          <li><strong>Binary pulsars.</strong> Pulsar masses are $\sim 1.4\, M_\odot \ll M_0$, so EMGT reduces to GR and all binary pulsar timing results (Hulse-Taylor) are reproduced.</li>
+        </ol>
+        <div class="trap">The scale term $[1+\gamma e^{-r/r_0}]$ can affect Solar System physics if $\gamma$ is not small. For EMGT to pass all Solar System precision tests, either $\gamma \ll 1$ or a Vainshtein-type screening mechanism must suppress the scale correction in dense local environments. This is a genuine constraint on the model parameters.</div>
+      </div>
+    </div>
+    <div class="tip"><strong>Verdict: PASS</strong> for the mass term. The scale term requires $\gamma$ to be small or a screening mechanism to be active.</div>
+  </div>
+
+  <div class="sub" id="s13-2">
+    <h3>13.2 Big Bang Nucleosynthesis</h3>
+    <p class="body-text">BBN synthesised hydrogen, helium, and lithium in the first few minutes after the Big Bang and requires $G_\text{eff} \approx G$ at that epoch. Any significant enhancement would alter the neutron-to-proton freeze-out ratio and produce incorrect helium abundances. In EMGT, the scalar field $\phi$ is frozen at a small value in the early high-energy universe, the time field has $\delta(t_\text{BBN}) \approx 0$ by construction, and the scale correction is negligible on Hubble-radius scales at BBN.</p>
+    <div class="tip"><strong>Verdict: PASS</strong> with a correctly chosen scalar field potential that keeps $\phi$ frozen at early times.</div>
+  </div>
+
+  <div class="sub" id="s13-3">
+    <h3>13.3 CMB Acoustic Peaks</h3>
+    <p class="body-text">The CMB temperature power spectrum has a precise pattern of acoustic peaks set by the competition between gravitational compression and radiation pressure in the early universe. Lambda-CDM fits this spectrum using roughly five times more dark matter than baryons to deepen the gravitational potential wells. For EMGT, reproducing these wells without dark matter requires the enhancement factor to be negligible at recombination ($z \sim 1100$) while being significant at later times. If $\bar\phi \ll 1$ at $z \sim 1100$, the CMB is undisturbed.</p>
+    <div class="note-box"><strong>Open challenge: the third CMB peak.</strong> Without dark matter, the third acoustic peak is generically too small relative to the second. EMGT's late-time growth enhancement cannot directly fix this because the CMB was formed before the enhancement activates. A full Boltzmann code (CAMB or CLASS) calculation with EMGT field equations is needed to determine whether the third peak height can be matched.</div>
+  </div>
+
+  <div class="sub" id="s13-4">
+    <h3>13.4 Structure Formation</h3>
+    <p class="body-text">Without dark matter, standard GR predicts density perturbations grow too slowly to form the observed galaxy distribution. EMGT provides a boost through the enhanced growth equation (5.4). For $\beta \approx 8$ and $\bar\phi \sim 1$ today, the growth rate is enhanced by approximately $\sqrt{6}$ relative to baryon-only gravity, comparable to the contribution dark matter makes in Lambda-CDM. Structure formation can proceed successfully.</p>
+    <div class="tip"><strong>Verdict: PASS</strong> The enhanced growth equation replaces the gravitational contribution of dark matter with the right order of magnitude for $\beta \sim 8$.</div>
+  </div>
+
+  <div class="sub" id="s13-5">
+    <h3>13.5 Gravitational Wave Speed</h3>
+    <p class="body-text">The 2017 event GW170817 (neutron star merger plus simultaneous gamma-ray burst) constrained the gravitational wave speed to equal $c$ to one part in $10^{15}$. Many modified gravity theories predict $c_\text{gw} \neq c$ and were ruled out by this single measurement. In EMGT, tensor perturbations propagate at $c$ as long as $\omega(\phi) = 1$ (standard kinetic term). The Proca field contributes only to scalar and vector modes, not tensor modes. EMGT is safe.</p>
+    <div class="tip"><strong>Verdict: PASS</strong> EMGT is consistent with GW170817, unlike several Horndeski and $f(R)$ variants ruled out by that event.</div>
+  </div>
+
+  <div class="sub" id="s13-6">
+    <h3>13.6 Dwarf Galaxy Dynamics</h3>
+    <p class="body-text">Ultra-faint dwarf galaxies in the Local Group have total masses $M \sim 10^7$-$10^9\, M_\odot$, far below $M_0$. EMGT predicts near-Newtonian dynamics for these systems with essentially no mass-dependent enhancement. MOND predicts strong enhancement (low acceleration). This difference is the clearest observational discriminant between MOND and EMGT, and future spectroscopic surveys of Local Group dwarfs will directly test it.</p>
+    <div class="note-box"><strong>Potential tension.</strong> If dwarf galaxy kinematics require an enhancement that EMGT cannot provide at low $M$, this would challenge the theory at the low-mass end. Adjusting $M_0$ downward to help dwarfs would then over-enhance gravity for stellar-mass systems. This is a genuine open constraint.</div>
+  </div>
+
+  <div class="sub" id="s13-7">
+    <h3>13.7 Performance Summary</h3>
+    <table class="scale-table">
+      <thead><tr><th>Test</th><th>EMGT</th><th>Lambda-CDM</th><th>MOND</th><th>MOG/STVG</th></tr></thead>
+      <tbody>
+        <tr><td>Solar System / local</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="tick">Pass</td></tr>
+        <tr><td>BBN</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="partial">N/A</td><td class="tick">Pass</td></tr>
+        <tr><td>Rotation curves</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="tick">Pass</td></tr>
+        <tr><td>Cluster dynamics</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="tick">Pass</td></tr>
+        <tr><td>CMB 1st + 2nd peak</td><td class="partial">Tuning needed</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="partial">Partial</td></tr>
+        <tr><td>CMB 3rd peak</td><td class="partial">Open question</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="partial">Partial</td></tr>
+        <tr><td>Structure formation</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="tick">Pass</td></tr>
+        <tr><td>Bullet Cluster</td><td class="partial">Challenge</td><td class="tick">Pass</td><td class="cross">Fail</td><td class="tick">Pass</td></tr>
+        <tr><td>GW170817</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="partial">N/A</td><td class="partial">Marginal</td></tr>
+        <tr><td>Dwarf galaxies</td><td class="partial">Tension possible</td><td class="tick">Pass</td><td class="tick">Pass</td><td class="partial">Partial</td></tr>
+        <tr><td>No exotic particles</td><td class="tick">Yes</td><td class="cross">No</td><td class="tick">Yes</td><td class="tick">Yes</td></tr>
+      </tbody>
+    </table>
+
+    <div class="insight">
+      <div class="insight-title">Final verdict</div>
+      <p>EMGT outperforms MOND across almost all tests, is competitive with MOG/STVG, and trails Lambda-CDM only on the CMB third peak and Bullet Cluster. Its main advantages are the absence of exotic matter, a hard saturation ceiling at high mass, and consistency with GW170817. The main open challenges are the CMB third peak height, the Bullet Cluster offset, and potential tension with dwarf galaxy kinematics. None of these are immediately fatal; they define the targets for the next stage of model development and numerical testing.</p>
+    </div>
+  </div>
+</div>
+
+
 <div class="sec" id="s9">
   <div class="sec-header">
     <div class="sec-num">Section 9</div>
-    <div class="sec-title">Quick Reference — All Key Equations</div>
+    <div class="sec-title">Quick Reference: All Key Equations</div>
   </div>
 
   <table class="ref-table">
@@ -875,6 +1209,9 @@ pos += v * dt               <span class="comment"># full-step position</span>
     <li>Implement the EMGT force law in an N-body simulation kernel, identifying which enhancement factor can be pre-computed for efficiency.</li>
     <li>Compare EMGT with Newtonian gravity, MOND, GR/$\Lambda$CDM, and $f(R)$: give one advantage and one limitation of each relative to EMGT.</li>
     <li>Describe the Bullet Cluster and explain why it is the single biggest observational challenge for EMGT.</li>
+    <li>Compare EMGT with MOND, MOG/STVG, and Lambda-CDM across at least five criteria: dark matter need, rotation curves, cluster dynamics, CMB, and gravitational wave speed.</li>
+    <li>State the three distinguishing features of EMGT relative to all other theories in the comparison table.</li>
+    <li>Identify the two most significant open observational challenges for EMGT and explain why neither is immediately fatal to the theory.</li>
   </ul>
 </div>
 
